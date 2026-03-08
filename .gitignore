@@ -52,3 +52,7 @@ pip-delete-this-directory.txt
 # Logs
 *.log
 logs/
+
+# Additional files to ignore
+mails.docx
+~$*
