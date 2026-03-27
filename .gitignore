@@ -49,6 +49,9 @@ pip-log.txt
 pip-delete-this-directory.txt
 .ipynb_checkpoints/
 
+# pytest
+.pytest_cache/
+
 # Logs
 *.log
 logs/
