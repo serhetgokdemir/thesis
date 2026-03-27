@@ -39,7 +39,7 @@ thesis-nonlinear-equations/
 │   │   └── experiments/
 │   │
 │   ├── tables/
-│   │   └── generated/           <-- (NEW, latex table çıktıları)
+│   │   └── generated/
 │   │
 │   ├── bibliography/
 │   │   └── references.bib
