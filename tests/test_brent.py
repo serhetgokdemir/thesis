@@ -1,6 +1,6 @@
 import math
 import pytest
-from single_variable.brent import brent
+from src.single_variable.brent import brent
 
 # f(x) = x^3 - x - 2, kök ~1.5213797
 f1 = lambda x: x**3 - x - 2
@@ -11,17 +11,34 @@ true_root_quad = math.sqrt(2.0)
 
 def test_brent_convergence():
     result = brent(f1, 1, 2)
+    assert result["method"] == "brent"
     assert result["converged"]
     assert "root" in result
+    assert isinstance(result["iterations"], int)
+    assert result["iterations"] > 0
     assert abs(result["root"] - 1.5213797) < 1e-7
     assert result["final_residual"] < 1e-8
+    assert "final_error" in result
+    assert result["final_error"] is not None
+    assert result["final_error"] >= 0.0
+    assert result["message"] in {
+        "converged by residual tolerance",
+        "converged by bracket tolerance",
+    }
     assert len(result["history"]) > 0
 
 def test_brent_convergence_other_func():
     # basit fonksiyon f(x) = x^2 - 2 için ortak doğrulama testi
     result = brent(f_quad, 1, 2)
+    assert result["method"] == "brent"
     assert result["converged"]
+    assert isinstance(result["iterations"], int)
+    assert result["iterations"] > 0
     assert abs(result["root"] - true_root_quad) < 1e-7
+    assert result["message"] in {
+        "converged by residual tolerance",
+        "converged by bracket tolerance",
+    }
 
 def test_brent_invalid_interval():
     with pytest.raises(ValueError, match="invalid bracketing interval"):
@@ -31,9 +48,14 @@ def test_brent_max_iter():
     result = brent(f1, 1, 2, max_iter=3)
     assert not result["converged"]
     assert result["message"] == "maximum iterations reached"
+    assert result["iterations"] == 3
+    assert "final_residual" in result
+    assert isinstance(result["final_residual"], float)
+    assert len(result["history"]) == result["iterations"]
 
 def test_brent_history_keys():
     result = brent(f1, 1, 2)
     history_item = result["history"][0]
     expected_keys = {"iteration", "a", "b", "c", "x", "fa", "fb", "fc", "interval_width"}
     assert expected_keys == set(history_item.keys())
+    assert len(result["history"]) == result["iterations"]
