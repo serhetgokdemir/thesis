@@ -1,28 +1,103 @@
-# Sayısal Analiz Yöntemleri Tez Projesi
+# Matematik Mühendisliği Lisans Bitirme Tezi Projesi
 
-Bu proje, sayısal analiz dersi kapsamında geliştirilen ve bir yüksek lisans tezinin parçası olan sayısal kök bulma yöntemlerinin Python implementasyonlarını içermektedir. Amaç, temiz, test edilebilir ve matematiksel olarak doğru kodlar üreterek akademik bir standardı korumaktır.
+Bu proje, Yıldız Teknik Üniversitesi Matematik Mühendisliği bölümü lisans bitirme tezi kapsamında geliştirilen bir nümerik kök bulma yöntemleri projesinin implementasyonlarını ve gerekli dokümanlarını içermektedir. Amaç, temiz, test edilebilir ve matematiksel olarak doğru kodlar üreterek akademik bir standardı korumaktır.
+
+Serhet Gökdemir tarafından, Hale Gonce Köçken danışmanlığında geliştirilmiştir.
 
 ## Proje Yapısı
 
-Proje, sayısal yöntemlerin kendisini (`src`) ve bu yöntemleri doğrulayan testleri (`tests`) içerecek şekilde iki ana klasöre ayrılmıştır.
+Proje, hem tez metnini (LaTeX), hem sayısal yöntemlerin Python implementasyonlarını, hem de deney/sonuç dosyalarını içerecek şekilde aşağıdaki hiyerarşi etrafında organize edilmiştir. Bazı klasörler henüz tamamen dolu olmayabilir; yapı hedef mimariyi göstermektedir.
 
 ```
-.
-├── src
-│   ├── single_variable
+thesis-nonlinear-equations/
+│
+├── README.md
+├── .gitignore
+│
+├── thesis/
+│   ├── main.tex
+│   │
+│   ├── chapters/
+│   │   ├── introduction.tex
+│   │   ├── mathematical_background.tex
+│   │   ├── single_nonlinear_equations.tex
+│   │   ├── systems_of_nonlinear_equations.tex
+│   │   ├── implementation_and_experiments.tex
+│   │   ├── optimization_connection.tex
+│   │   └── conclusion.tex
+│   │
+│   ├── frontmatter/
+│   │   ├── abstract.tex
+│   │   ├── preface.tex
+│   │   ├── symbols.tex
+│   │   ├── abbreviations.tex
+│   │   └── report_sections.tex   <-- (NEW)
+│   │
+│   ├── figures/
+│   │   ├── single_variable/
+│   │   ├── systems/
+│   │   └── experiments/
+│   │
+│   ├── tables/
+│   │   └── generated/           <-- (NEW, latex table çıktıları)
+│   │
+│   ├── bibliography/
+│   │   └── references.bib
+│   │
+│   └── output/
+│       └── main.pdf
+│
+├── src/
+│   ├── single_variable/
 │   │   ├── bisection.py
-│   │   ├── brent.py
-│   │   ├── damped_newton.py
+│   │   ├── secant.py
 │   │   ├── newton.py
-│   │   └── secant.py
-│   └── systems
-│       ├── broyden.py
-│       └── newton_system.py
-├── tests
+│   │   ├── damped_newton.py
+│   │   └── brent.py
+│   │
+│   ├── systems/
+│   │   ├── newton_system.py
+│   │   └── broyden.py
+│   │
+│   ├── utils/
+│   │   ├── stopping_criteria.py
+│   │   ├── norms.py
+│   │   ├── derivatives.py
+│   │   ├── jacobian.py
+│   │   └── plotting.py
+│   │
+│   └── __init__.py
+│
+├── experiments/
+│   ├── single_variable_experiments.py
+│   ├── system_experiments.py
+│   ├── generate_tables.py        <-- (NEW)
+│   └── generate_plots.py         <-- (NEW)
+│
+├── tests/
 │   ├── test_bisection.py
+│   ├── test_secant.py
+│   ├── test_newton.py
+│   ├── test_damped_newton.py
 │   ├── test_brent.py
-│   # ... diğer testler
-└── requirements.txt
+│   ├── test_newton_system.py
+│   └── test_broyden.py
+│
+├── data/
+│   ├── raw/
+│   └── generated_results/
+│       ├── csv/
+│       └── tables/
+│
+└── notebooks/
+	├── single_variable_demo.ipynb
+	└── systems_demo.ipynb
+
+# Mevcut ekstra klasörler
+- checkpoints/ : Tarihsel ilerleme PDF’leri (ör. 03.17.2026.pdf)
+- history/     : Geçmiş/dökümantasyon için yer tutucu
+- forbidden/   : Kişisel veya repoya dahil edilmeyen dosyalar (gitignore)
+- venv/        : Sanal ortam (gitignore)
 ```
 
 ## Kurulum ve Çalıştırma
