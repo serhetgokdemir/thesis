@@ -95,7 +95,6 @@ thesis-nonlinear-equations/
 
 # Mevcut ekstra klasörler
 - checkpoints/ : Tarihsel ilerleme PDF’leri (ör. 03.17.2026.pdf)
-- history/     : Geçmiş/dökümantasyon için yer tutucu
 - forbidden/   : Kişisel veya repoya dahil edilmeyen dosyalar (gitignore)
 - venv/        : Sanal ortam (gitignore)
 ```
