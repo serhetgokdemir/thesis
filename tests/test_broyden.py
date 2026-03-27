@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from src.systems.broyden import broyden
+from systems.broyden import broyden
 
 # F(x, y) = [x^2 + y^2 - 4, x - y - 1]
 # Köklerden biri ~[1.82287, 0.82287]

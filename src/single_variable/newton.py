@@ -27,7 +27,8 @@ def newton(
         fx = f(x)
         dfx = df(x)
 
-        if abs(dfx) < 1e-15:
+        # handle near-zero derivative to avoid unstable steps
+        if abs(dfx) < max(10.0 * tol, 1e-15):
             return {
                 "method": "newton",
                 "root": x,
@@ -53,18 +54,6 @@ def newton(
             "error": error
         })
         
-        if abs(f(x_next)) <= tol:
-            return {
-                "method": "newton",
-                "root": x_next,
-                "converged": True,
-                "iterations": i + 1,
-                "final_error": error,
-                "final_residual": abs(f(x_next)),
-                "message": "converged by residual tolerance",
-                "history": history
-            }
-
         if error <= tol:
             return {
                 "method": "newton",
@@ -74,6 +63,18 @@ def newton(
                 "final_error": error,
                 "final_residual": abs(f(x_next)),
                 "message": "converged by step tolerance",
+                "history": history
+            }
+
+        if abs(f(x_next)) <= tol:
+            return {
+                "method": "newton",
+                "root": x_next,
+                "converged": True,
+                "iterations": i + 1,
+                "final_error": error,
+                "final_residual": abs(f(x_next)),
+                "message": "converged by residual tolerance",
                 "history": history
             }
         

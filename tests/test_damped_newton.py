@@ -1,5 +1,5 @@
 import pytest
-from src.single_variable.damped_newton import damped_newton
+from single_variable.damped_newton import damped_newton
 
 # f(x) = x^3 - x - 2, kök ~1.5213797
 f1 = lambda x: x**3 - x - 2
