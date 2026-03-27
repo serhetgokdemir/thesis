@@ -23,6 +23,7 @@ def newton_system(
     """
     x = np.array(x0, dtype=float)
     history: List[Dict[str, Any]] = []
+    last_step_norm: float | None = None
 
     for i in range(max_iter):
         Fx = F(x)
@@ -34,9 +35,9 @@ def newton_system(
                 "root": x,
                 "converged": True,
                 "iterations": i,
-                "final_error": 0,
+                "final_error": 0.0,
                 "final_residual": norm_Fx,
-                "message": "converged by residual tolerance (initial guess)",
+                "message": "converged by residual tolerance",
                 "history": history
             }
 
@@ -49,15 +50,16 @@ def newton_system(
                 "root": x,
                 "converged": False,
                 "iterations": i,
-                "final_error": None,
+                "final_error": last_step_norm,
                 "final_residual": norm_Fx,
                 "message": "jacobian solve failed",
                 "history": history
             }
 
-        step_norm = np.linalg.norm(s)
+        step_norm = float(np.linalg.norm(s))
+        last_step_norm = step_norm
         x_next = x + s
-        
+
         history.append({
             "iteration": i,
             "x": x.tolist(),
@@ -66,14 +68,17 @@ def newton_system(
             "error": step_norm
         })
 
-        if np.linalg.norm(F(x_next)) <= tol:
+        F_next = F(x_next)
+        norm_F_next = float(np.linalg.norm(F_next))
+
+        if norm_F_next <= tol:
             return {
                 "method": "newton_system",
                 "root": x_next,
                 "converged": True,
                 "iterations": i + 1,
                 "final_error": step_norm,
-                "final_residual": np.linalg.norm(F(x_next)),
+                "final_residual": norm_F_next,
                 "message": "converged by residual tolerance",
                 "history": history
             }
@@ -85,20 +90,23 @@ def newton_system(
                 "converged": True,
                 "iterations": i + 1,
                 "final_error": step_norm,
-                "final_residual": np.linalg.norm(F(x_next)),
+                "final_residual": norm_F_next,
                 "message": "converged by step tolerance",
                 "history": history
             }
-            
+
         x = x_next
+
+    Fx = F(x)
+    norm_Fx = float(np.linalg.norm(Fx))
 
     return {
         "method": "newton_system",
         "root": x,
         "converged": False,
         "iterations": max_iter,
-        "final_error": np.linalg.norm(s),
-        "final_residual": np.linalg.norm(F(x)),
+        "final_error": last_step_norm,
+        "final_residual": norm_Fx,
         "message": "maximum iterations reached",
         "history": history
     }
