@@ -35,5 +35,5 @@ def test_brent_max_iter():
 def test_brent_history_keys():
     result = brent(f1, 1, 2)
     history_item = result["history"][0]
-    expected_keys = {"iteration", "a", "b", "c", "fa", "fb", "fc", "interval_width"}
-    assert set(history_item.keys()).issubset(expected_keys)
+    expected_keys = {"iteration", "a", "b", "c", "x", "fa", "fb", "fc", "interval_width"}
+    assert expected_keys == set(history_item.keys())

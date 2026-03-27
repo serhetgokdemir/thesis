@@ -35,8 +35,6 @@ def brent(
     history: List[Dict[str, Any]] = []
 
     eps = 2.220446049250313e-16  # double precision machine epsilon
-    # use a slightly stricter internal tolerance to get a more accurate root
-    tol_internal = tol * 0.1
 
     for i in range(max_iter):
         # record iteration state
@@ -46,6 +44,7 @@ def brent(
                 "a": a,
                 "b": b,
                 "c": c,
+                "x": b,
                 "fa": fa,
                 "fb": fb,
                 "fc": fc,
@@ -58,19 +57,33 @@ def brent(
             a, b, c = b, c, b
             fa, fb, fc = fb, fc, fb
 
-        # convergence checks: bracket width and residual
+        # convergence checks: bracket width and residual (project standard)
         m = 0.5 * (c - b)
-        tol_act = 2.0 * eps * abs(b) + tol_internal
+        bracket_width = abs(c - b)
+        tol_act = 2.0 * eps * abs(b) + tol
 
-        if abs(m) <= tol_act and abs(fb) <= tol_internal:
+        # first check residual, then bracket width
+        if abs(fb) <= tol:
             return {
                 "method": "brent",
                 "root": b,
                 "converged": True,
                 "iterations": i + 1,
-                "final_error": abs(m),
+                "final_error": bracket_width / 2.0,
                 "final_residual": abs(fb),
-                "message": "converged by tolerance",
+                "message": "converged by residual tolerance",
+                "history": history,
+            }
+
+        if bracket_width <= tol:
+            return {
+                "method": "brent",
+                "root": b,
+                "converged": True,
+                "iterations": i + 1,
+                "final_error": bracket_width / 2.0,
+                "final_residual": abs(fb),
+                "message": "converged by bracket tolerance",
                 "history": history,
             }
 
