@@ -56,3 +56,4 @@ logs/
 # Additional files to ignore
 mails.docx
 ~$*
+forbidden/
