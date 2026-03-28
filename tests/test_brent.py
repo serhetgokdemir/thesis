@@ -17,15 +17,15 @@ def test_brent_convergence():
     assert isinstance(result["iterations"], int)
     assert result["iterations"] > 0
     assert abs(result["root"] - 1.5213797) < 1e-7
+    assert isinstance(result["final_residual"], float)
+    assert isinstance(result["final_error"], float)
     assert result["final_residual"] < 1e-8
-    assert "final_error" in result
-    assert result["final_error"] is not None
     assert result["final_error"] >= 0.0
     assert result["message"] in {
         "converged by residual tolerance",
         "converged by bracket tolerance",
     }
-    assert len(result["history"]) > 0
+    assert len(result["history"]) == result["iterations"]
 
 def test_brent_convergence_other_func():
     # basit fonksiyon f(x) = x^2 - 2 için ortak doğrulama testi
@@ -49,8 +49,8 @@ def test_brent_max_iter():
     assert not result["converged"]
     assert result["message"] == "maximum iterations reached"
     assert result["iterations"] == 3
-    assert "final_residual" in result
     assert isinstance(result["final_residual"], float)
+    assert isinstance(result["final_error"], float)
     assert len(result["history"]) == result["iterations"]
 
 def test_brent_history_keys():

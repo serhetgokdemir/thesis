@@ -35,7 +35,7 @@ def secant(
                 "converged": False,
                 "iterations": i,
                 "final_error": None,
-                "final_residual": abs(f1),
+                "final_residual": float(abs(f1)),
                 "message": "secant denominator too small",
                 "history": history
             }
@@ -55,7 +55,7 @@ def secant(
         })
 
         f_next = f(x_next)
-        residual_next = abs(f_next)
+        residual_next = float(abs(f_next))
 
         if residual_next <= tol:
             return {
@@ -90,7 +90,7 @@ def secant(
         "converged": False,
         "iterations": max_iter,
         "final_error": last_error,
-        "final_residual": abs(f1),
+        "final_residual": float(abs(f1)),
         "message": "maximum iterations reached",
         "history": history
     }
