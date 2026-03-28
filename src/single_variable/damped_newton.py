@@ -31,6 +31,7 @@ def damped_newton(
     x = x0
     history: List[Dict[str, Any]] = []
     current_alpha = alpha
+    last_error: float | None = None
 
     for i in range(max_iter):
         fx = f(x)
@@ -48,17 +49,19 @@ def damped_newton(
                 "history": history
             }
 
+        # her iterasyonda alpha'yi temiz bir sekilde baslat
+        current_alpha = alpha
         step_direction = fx / dfx
-        
+
         # backtracking line search
         if backtracking:
-            current_alpha = alpha
             while abs(f(x - current_alpha * step_direction)) >= abs(fx) and current_alpha > min_alpha:
                 current_alpha *= rho
         
         step = current_alpha * step_direction
         x_next = x - step
         error = abs(step)
+        last_error = error
 
         history.append({
             "iteration": i,
@@ -70,14 +73,17 @@ def damped_newton(
             "error": error
         })
 
-        if abs(f(x_next)) <= tol:
+        f_next = f(x_next)
+        residual_next = abs(f_next)
+
+        if residual_next <= tol:
             return {
                 "method": "damped_newton",
                 "root": x_next,
                 "converged": True,
                 "iterations": i + 1,
                 "final_error": error,
-                "final_residual": abs(f(x_next)),
+                "final_residual": residual_next,
                 "message": "converged by residual tolerance",
                 "history": history
             }
@@ -89,7 +95,7 @@ def damped_newton(
                 "converged": True,
                 "iterations": i + 1,
                 "final_error": error,
-                "final_residual": abs(f(x_next)),
+                "final_residual": residual_next,
                 "message": "converged by step tolerance",
                 "history": history
             }
@@ -101,7 +107,7 @@ def damped_newton(
         "root": x,
         "converged": False,
         "iterations": max_iter,
-        "final_error": abs(step),
+        "final_error": last_error,
         "final_residual": abs(f(x)),
         "message": "maximum iterations reached",
         "history": history

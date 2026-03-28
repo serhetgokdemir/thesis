@@ -23,10 +23,12 @@ def secant(
     f0 = f(x0)
     f1 = f(x1)
     history: List[Dict[str, Any]] = []
+    last_error: float | None = None
 
     for i in range(max_iter):
         denominator = f1 - f0
-        if abs(denominator) < 1e-15:
+        # guard against nearly-zero secant denominator
+        if abs(denominator) < max(10.0 * tol, 1e-15):
             return {
                 "method": "secant",
                 "root": x1,
@@ -40,6 +42,7 @@ def secant(
 
         x_next = x1 - f1 * (x1 - x0) / denominator
         error = abs(x_next - x1)
+        last_error = error
         
         history.append({
             "iteration": i,
@@ -52,15 +55,16 @@ def secant(
         })
 
         f_next = f(x_next)
+        residual_next = abs(f_next)
 
-        if abs(f_next) <= tol:
+        if residual_next <= tol:
             return {
                 "method": "secant",
                 "root": x_next,
                 "converged": True,
                 "iterations": i + 1,
                 "final_error": error,
-                "final_residual": abs(f_next),
+                "final_residual": residual_next,
                 "message": "converged by residual tolerance",
                 "history": history
             }
@@ -72,7 +76,7 @@ def secant(
                 "converged": True,
                 "iterations": i + 1,
                 "final_error": error,
-                "final_residual": abs(f_next),
+                "final_residual": residual_next,
                 "message": "converged by step tolerance",
                 "history": history
             }
@@ -85,7 +89,7 @@ def secant(
         "root": x1,
         "converged": False,
         "iterations": max_iter,
-        "final_error": abs(x1 - x0),
+        "final_error": last_error,
         "final_residual": abs(f1),
         "message": "maximum iterations reached",
         "history": history
