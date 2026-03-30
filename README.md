@@ -31,7 +31,7 @@ thesis-nonlinear-equations/
 │   │   ├── preface.tex
 │   │   ├── symbols.tex
 │   │   ├── abbreviations.tex
-│   │   └── report_sections.tex   <-- (NEW)
+│   │   └── report_sections.tex
 │   │
 │   ├── figures/
 │   │   ├── single_variable/
@@ -71,8 +71,8 @@ thesis-nonlinear-equations/
 ├── experiments/
 │   ├── single_variable_experiments.py
 │   ├── system_experiments.py
-│   ├── generate_tables.py        <-- (NEW)
-│   └── generate_plots.py         <-- (NEW)
+│   ├── generate_tables.py 
+│   └── generate_plots.py 
 │
 ├── tests/
 │   ├── test_bisection.py
