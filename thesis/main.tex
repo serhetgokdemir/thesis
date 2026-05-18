@@ -1,0 +1,27 @@
+\documentclass{report}
+
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+
+% front matter
+\input{frontmatter/abstract}
+\input{frontmatter/preface}
+\input{frontmatter/symbols}
+\input{frontmatter/abbreviations}
+
+\tableofcontents
+
+% chapters
+\input{chapters/introduction}
+\input{chapters/mathematical_background}
+\input{chapters/single_nonlinear_equations}
+\input{chapters/systems_of_nonlinear_equations}
+\input{chapters/implementation_and_experiments}
+\input{chapters/optimization_connection}
+\input{chapters/conclusion}
+
+\bibliographystyle{apa}
+\bibliography{bibliography/references}
+
+\end{document}

@@ -1,0 +1,281 @@
+\chapter{Systems of Nonlinear Equations}
+
+\section{Multivariable Newton Method}
+
+Newton's method can be extended to systems of nonlinear equations in a natural way. Consider a system of the form
+\begin{equation}
+F(\mathbf{x}) = \mathbf{0},
+\end{equation}
+where \( F : \mathbb{R}^n \to \mathbb{R}^n \) is a vector-valued function.
+
+Starting from an initial guess \( \mathbf{x}_0 \), the method generates a sequence \( \{\mathbf{x}_k\} \) using the iterative formula
+\begin{equation}
+\mathbf{x}_{k+1} = \mathbf{x}_k + \mathbf{s}_k,
+\end{equation}
+where the step \( \mathbf{s}_k \) is obtained by solving the linear system
+\begin{equation}
+J_F(\mathbf{x}_k)\mathbf{s}_k = -F(\mathbf{x}_k).
+\end{equation}
+
+Here, \( J_F(\mathbf{x}_k) \) denotes the Jacobian matrix evaluated at \( \mathbf{x}_k \). This formulation can be interpreted as a multivariable generalization of the Newton update, where the nonlinear system is locally approximated by a linear one.
+
+At each iteration, a linear system must be solved. Therefore, compared to the scalar case, the computational cost per iteration is higher. However, under suitable conditions, the method retains its rapid convergence properties.
+
+If the initial guess is sufficiently close to the solution and the Jacobian matrix is nonsingular at the root, the method typically exhibits quadratic convergence. This makes it one of the most efficient methods for solving nonlinear systems \cite{kelley, burden}.
+
+Despite its strong convergence properties, the method has several limitations. The need to compute and factorize the Jacobian matrix can be computationally expensive, especially for large systems. In addition, if the Jacobian is singular or nearly singular, the method may fail or produce unstable steps.
+
+For these reasons, modifications and alternative methods are often considered in practice, particularly when dealing with large-scale or ill-conditioned systems.
+
+\section{Convergence Analysis}
+
+The convergence behavior of Newton's method for systems is similar to the scalar case, but it depends on additional factors related to the structure of the system.
+
+Let \( \mathbf{x}^* \) be a solution of the system \( F(\mathbf{x}) = \mathbf{0} \). If the function \( F \) is sufficiently smooth and the Jacobian matrix \( J_F(\mathbf{x}^*) \) is nonsingular, then Newton's method exhibits quadratic convergence in a neighborhood of \( \mathbf{x}^* \). This means that the error satisfies
+\begin{equation}
+\|\mathbf{x}_{k+1} - \mathbf{x}^*\| \approx C \|\mathbf{x}_k - \mathbf{x}^*\|^2,
+\end{equation}
+for some constant \( C > 0 \) and sufficiently large \( k \) \cite{kelley}.
+
+This rapid convergence makes Newton's method very efficient when a good initial approximation is available. However, the method is not globally convergent. If the initial guess is far from the solution, the method may fail to converge or may converge to an unintended solution.
+
+Another important factor is the conditioning of the Jacobian matrix. If \( J_F(\mathbf{x}_k) \) is ill-conditioned or nearly singular, solving the linear system
+\begin{equation}
+J_F(\mathbf{x}_k)\mathbf{s}_k = -F(\mathbf{x}_k)
+\end{equation}
+may lead to large or unstable steps. This can cause divergence or oscillatory behavior.
+
+In practice, the convergence of the method is often monitored using a combination of criteria such as
+\begin{equation}
+\|\mathbf{F}(\mathbf{x}_k)\| < \varepsilon
+\end{equation}
+and
+\begin{equation}
+\|\mathbf{x}_{k+1} - \mathbf{x}_k\| < \varepsilon,
+\end{equation}
+where \( \varepsilon \) is a prescribed tolerance.
+
+Due to these limitations, various modifications of Newton's method have been developed to improve its robustness. These include damping strategies, line search techniques, and quasi-Newton methods such as Broyden's method.
+
+\section{Broyden's Method}
+
+Broyden's method is a quasi-Newton method developed for solving systems of nonlinear equations. The main idea of the method is to avoid the explicit computation of the Jacobian matrix while still retaining a structure similar to Newton's method.
+
+In Newton's method, the step \( \mathbf{s}_k \) is obtained by solving
+\begin{equation}
+J_F(\mathbf{x}_k)\mathbf{s}_k = -F(\mathbf{x}_k).
+\end{equation}
+In contrast, Broyden's method replaces the Jacobian matrix with an approximation \( B_k \), leading to the system
+\begin{equation}
+B_k \mathbf{s}_k = -F(\mathbf{x}_k).
+\end{equation}
+
+The approximation \( B_k \) is updated at each iteration using information from previous steps. One common update formula, known as the good Broyden update, is given by
+\begin{equation}
+B_{k+1} = B_k + \frac{(\mathbf{y}_k - B_k \mathbf{s}_k)\mathbf{s}_k^T}{\mathbf{s}_k^T \mathbf{s}_k},
+\end{equation}
+where
+\begin{equation}
+\mathbf{y}_k = F(\mathbf{x}_{k+1}) - F(\mathbf{x}_k).
+\end{equation}
+
+This update ensures that the new approximation \( B_{k+1} \) satisfies a secant-like condition, which is a generalization of the secant method to higher dimensions.
+
+One of the main advantages of Broyden's method is that it eliminates the need to compute the Jacobian matrix explicitly. This can significantly reduce computational cost, especially for large systems or when evaluating derivatives is expensive.
+
+However, the convergence of Broyden's method is generally slower than that of Newton's method. While Newton's method achieves quadratic convergence under suitable conditions, Broyden's method typically exhibits superlinear convergence.
+
+The performance of the method also depends on the choice of the initial approximation \( B_0 \). A good initial approximation can improve convergence speed, while a poor choice may lead to slow convergence or instability.
+
+Despite these limitations, Broyden's method is widely used in practice due to its efficiency and its ability to handle problems where the Jacobian is difficult to compute \cite{kelley}.
+
+\section{Illustrative Example}
+
+To illustrate the behavior of the methods for systems of nonlinear equations, consider the following system:
+\begin{equation}
+\begin{cases}
+x^2 + y^2 - 4 = 0, \\
+x - y - 1 = 0.
+\end{cases}
+\end{equation}
+
+This system represents the intersection of a circle and a line. One of its solutions is approximately
+\[
+\mathbf{x}^* \approx (1.82288,\ 0.82288).
+\]
+
+The same system is used to demonstrate both Newton's method and Broyden's method. The goal is to observe how the iterates approach the solution.
+
+\subsection{Newton Method for Systems}
+
+For Newton's method, the Jacobian matrix is given by
+\begin{equation}
+J_F(\mathbf{x}) =
+\begin{bmatrix}
+2x & 2y \\
+1 & -1
+\end{bmatrix}.
+\end{equation}
+
+Starting from the initial guess
+\[
+\mathbf{x}_0 = (2,\ 1),
+\]
+the method generates a sequence of approximations.
+
+\begin{table}[h!]
+\centering
+\caption{Newton method for the system}
+\label{tab:newton_system_example}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Iteration & \(x_k\) & \(y_k\) & \(\|F(\mathbf{x}_k)\|\) \\ \hline
+0 & 2.00000 & 1.00000 & 1.00000 \\ \hline
+1 & 1.83333 & 0.83333 & 0.05556 \\ \hline
+2 & 1.82292 & 0.82292 & 0.00022 \\ \hline
+3 & 1.82288 & 0.82288 & 0.00000 \\ \hline
+\end{tabular}
+\end{table}
+
+The method converges rapidly to the solution. After only a few iterations, the residual becomes very small. This behavior reflects the quadratic convergence of Newton's method near the root.
+
+\subsection{Broyden's Method for Systems}
+
+For Broyden's method, the same initial guess is used:
+\[
+\mathbf{x}_0 = (2,\ 1).
+\]
+The initial Jacobian approximation is taken as the identity matrix.
+
+\subsection{Broyden's Method for Systems}
+
+For Broyden's method, the same initial guess is used:
+\[
+\mathbf{x}_0 = (2,\ 1).
+\]
+In order to obtain a stable and informative sequence, the initial Jacobian approximation is chosen as
+\[
+B_0 =
+\begin{bmatrix}
+4 & 2 \\
+1 & -1
+\end{bmatrix},
+\]
+which corresponds to the exact Jacobian at the initial point.
+
+\begin{table}[h!]
+\centering
+\caption{Broyden method for the system}
+\label{tab:broyden_example}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Iteration & \(x_k\) & \(y_k\) & \(\|F(\mathbf{x}_k)\|\) \\ \hline
+0 & 2.00000 & 1.00000 & 1.00000 \\ \hline
+1 & 1.83333 & 0.83333 & 0.05556 \\ \hline
+2 & 1.82353 & 0.82353 & 0.00346 \\ \hline
+3 & 1.82288 & 0.82288 & 0.00001 \\ \hline
+4 & 1.82288 & 0.82288 & 0.00000 \\ \hline
+\end{tabular}
+\end{table}
+
+The method converges more slowly than Newton's method, but it still reaches the solution efficiently. In this example, the use of an initial Jacobian approximation close to the true Jacobian improves the stability of the iterates and leads to a smooth convergence pattern.
+
+\subsection{Comparison for the Example}
+
+The results show that Newton's method converges faster than Broyden's method in this example. This is expected, since Newton's method uses exact derivative information, while Broyden's method relies on approximations.
+
+On the other hand, Broyden's method avoids the computation of the Jacobian matrix, which can be advantageous in problems where derivative evaluation is expensive.
+
+\subsection{Failure Cases}
+
+\paragraph{Newton Method.}
+Newton's method may fail when the Jacobian matrix becomes singular or nearly singular. Consider the system
+\begin{equation}
+\begin{cases}
+x^2 = 0, \\
+y = 0.
+\end{cases}
+\end{equation}
+
+The Jacobian matrix is
+\[
+J_F(x,y) =
+\begin{bmatrix}
+2x & 0 \\
+0 & 1
+\end{bmatrix}.
+\]
+
+At the point \( (0, y) \), the Jacobian is singular. Starting from
+\[
+\mathbf{x}_0 = (0, 2),
+\]
+we have
+\[
+F(\mathbf{x}_0) = (0, 2),
+\qquad
+J_F(\mathbf{x}_0) =
+\begin{bmatrix}
+0 & 0 \\
+0 & 1
+\end{bmatrix}.
+\]
+
+The Newton step requires solving
+\[
+J_F(\mathbf{x}_0)\mathbf{s}_0 = -F(\mathbf{x}_0),
+\]
+which becomes
+\[
+\begin{bmatrix}
+0 & 0 \\
+0 & 1
+\end{bmatrix}
+\mathbf{s}_0 =
+\begin{bmatrix}
+0 \\
+-2
+\end{bmatrix}.
+\]
+
+This system has no unique solution, since the Jacobian matrix is singular. Therefore, the method cannot proceed from this initial point.
+
+Even when the Jacobian is not exactly singular but close to singular, the computed step may become very large, leading to instability and divergence.
+
+\paragraph{Broyden Method.}
+Broyden's method may fail when the update of the Jacobian approximation becomes numerically unstable. Consider again the system
+\begin{equation}
+\begin{cases}
+x^2 + y^2 - 4 = 0, \\
+x - y - 1 = 0,
+\end{cases}
+\end{equation}
+and assume that two consecutive iterates are very close:
+\[
+\mathbf{x}_k = (1.82288,\ 0.82288), \qquad
+\mathbf{x}_{k+1} = (1.82289,\ 0.82289).
+\]
+
+Then the step
+\[
+\mathbf{s}_k = \mathbf{x}_{k+1} - \mathbf{x}_k
+\]
+is extremely small. In the Broyden update formula
+\[
+B_{k+1} = B_k + \frac{(\mathbf{y}_k - B_k \mathbf{s}_k)\mathbf{s}_k^T}{\mathbf{s}_k^T \mathbf{s}_k},
+\]
+the denominator \( \mathbf{s}_k^T \mathbf{s}_k \) becomes very small.
+
+As a result, the update term may become very large, causing a significant distortion in the Jacobian approximation. This can lead to unstable iterations and loss of convergence.
+
+In practice, such situations are handled by introducing safeguards, such as skipping the update or restarting the method with a new approximation.
+
+\section{Comparison of Methods}
+
+In the context of systems of nonlinear equations, Newton's method and Broyden's method exhibit different trade-offs.
+
+Newton's method is generally more accurate and converges faster when the Jacobian matrix is well-behaved and the initial guess is sufficiently close to the solution. However, the need to compute and solve systems involving the Jacobian matrix increases the computational cost.
+
+Broyden's method, on the other hand, reduces computational effort by avoiding explicit Jacobian evaluations. This makes it more suitable for large-scale problems or problems where derivative information is difficult to obtain.
+
+Overall, Newton's method is preferred when accuracy and fast convergence are critical, while Broyden's method is advantageous when computational efficiency is more important \cite{kelley, chapra}.

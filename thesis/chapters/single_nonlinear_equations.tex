@@ -1,0 +1,390 @@
+\chapter{Single Nonlinear Equations}
+
+\section{Bisection Method}
+
+The bisection method is one of the simplest and most reliable numerical techniques for solving nonlinear equations of the form \( f(x) = 0 \). It is based on the Intermediate Value Theorem, which states that if a continuous function \( f \) changes sign over an interval \([a, b]\), then there exists at least one root in that interval \cite{burden, atkinson}.
+
+More precisely, if
+\begin{equation}
+f(a) \cdot f(b) < 0,
+\end{equation}
+then there exists a point \( c \in (a, b) \) such that
+\begin{equation}
+f(c) = 0.
+\end{equation}
+
+The method starts with such an interval \([a, b]\) and repeatedly bisects it. At each iteration, the midpoint is computed as
+\begin{equation}
+c_k = \frac{a_k + b_k}{2}.
+\end{equation}
+
+The value of the function at the midpoint, \( f(c_k) \), is then evaluated. Depending on the sign of \( f(c_k) \), the interval is updated as follows:
+
+\begin{itemize}
+    \item If \( f(a_k) \cdot f(c_k) < 0 \), then the root lies in \([a_k, c_k]\), so set \( b_{k+1} = c_k \).
+    \item Otherwise, the root lies in \([c_k, b_k]\), so set \( a_{k+1} = c_k \).
+\end{itemize}
+
+This process is repeated until a stopping criterion is satisfied, such as the interval length becoming sufficiently small or the function value approaching zero.
+
+One of the main advantages of the bisection method is its guaranteed convergence. As long as the function is continuous and the initial interval satisfies the sign change condition, the method will always converge to a root \cite{burden}.
+
+However, the method has a relatively slow rate of convergence. The error decreases linearly, and the interval length is halved at each iteration. More precisely, after \( k \) iterations, the error satisfies
+
+\begin{equation}
+|x_k - x^*| \leq \frac{b_0 - a_0}{2^k}.
+\end{equation}
+
+This linear convergence makes the method less efficient compared to methods such as Newton's method or the secant method. Nevertheless, due to its robustness and simplicity, the bisection method is often used as a baseline or as a component in more advanced hybrid methods such as Brent's method \cite{atkinson, cs357}.
+
+\section{Secant Method}
+
+The secant method is an iterative numerical technique used to solve nonlinear equations of the form \( f(x) = 0 \). It can be seen as a derivative-free alternative to Newton's method, as it approximates the derivative using finite differences instead of requiring an explicit analytical expression \cite{burden, atkinson}.
+
+Given two initial approximations \( x_0 \) and \( x_1 \), the method constructs a secant line through the points \( (x_{k-1}, f(x_{k-1})) \) and \( (x_k, f(x_k)) \). The next approximation is obtained by finding the root of this secant line:
+
+\begin{equation}
+x_{k+1} = x_k - f(x_k)\frac{x_k - x_{k-1}}{f(x_k) - f(x_{k-1})}.
+\end{equation}
+
+This formula eliminates the need for computing derivatives, making the method useful when the derivative of the function is difficult or expensive to evaluate.
+
+Unlike the bisection method, the secant method does not require the initial guesses to bracket a root. However, this also means that convergence is not guaranteed. The method may fail to converge if the initial guesses are not chosen appropriately or if the function behaves poorly in the neighborhood of the root \cite{kelley}.
+
+In terms of convergence speed, the secant method is generally faster than the bisection method. It has a superlinear rate of convergence, with order approximately equal to
+
+\begin{equation}
+p \approx 1.618,
+\end{equation}
+
+which is known as the golden ratio. Although this is slower than the quadratic convergence of Newton's method, it often provides a good balance between efficiency and computational cost \cite{burden}.
+
+One limitation of the secant method is that it requires two initial values and may encounter numerical instability if \( f(x_k) \approx f(x_{k-1}) \), which can lead to division by very small numbers. Despite these limitations, the method is widely used in practice due to its simplicity and effectiveness \cite{cs357}.
+
+\section{Newton's Method}
+
+Newton's method, also known as the Newton–Raphson method, is one of the most widely used techniques for solving nonlinear equations of the form \( f(x) = 0 \). Unlike the bisection and secant methods, Newton's method makes explicit use of the derivative of the function to achieve faster convergence \cite{burden, atkinson, kelley}.
+
+Starting from an initial guess \( x_0 \), the method generates a sequence \( \{x_k\} \) using the iterative formula
+
+\begin{equation}
+x_{k+1} = x_k - \frac{f(x_k)}{f'(x_k)}.
+\end{equation}
+
+Geometrically, this update rule corresponds to approximating the function by its tangent line at \( x_k \) and taking the root of this linear approximation as the next iterate.
+
+One of the main advantages of Newton's method is its rapid convergence. Under suitable conditions, such as when the initial guess is sufficiently close to the true root and \( f'(x^*) \neq 0 \), the method exhibits quadratic convergence. This means that the number of correct digits approximately doubles at each iteration \cite{burden}.
+
+However, the performance of Newton's method strongly depends on the choice of the initial guess. If the initial value is far from the root, the method may converge slowly, diverge, or converge to a different root. In addition, the method requires the computation of the derivative \( f'(x) \), which may be difficult or computationally expensive for some functions \cite{kelley}.
+
+Another limitation arises when the derivative is close to zero, which can lead to large updates and numerical instability. Despite these challenges, Newton's method remains a fundamental tool in numerical analysis due to its efficiency and strong theoretical properties \cite{chapra}.
+
+\section{Damped Newton Method}
+
+The damped Newton method is a modification of the classical Newton's method designed to improve its stability and convergence behavior. While the standard Newton method can converge very rapidly near the solution, it may fail or diverge if the initial guess is not sufficiently close to the root. The damped version addresses this issue by introducing a step size parameter \cite{kelley, chapra}.
+
+The iteration formula is given by
+
+\begin{equation}
+x_{k+1} = x_k - \alpha_k \frac{f(x_k)}{f'(x_k)},
+\end{equation}
+
+where \( \alpha_k \in (0,1] \) is a damping parameter. When \( \alpha_k = 1 \), the method reduces to the classical Newton's method.
+
+The main idea is to control the size of the update step in order to ensure more stable convergence. In practice, \( \alpha_k \) is often chosen using a line search strategy, which selects a step size that sufficiently reduces the function value or a related merit function \cite{kelley}.
+
+One common approach is to require that the function value decreases at each iteration, that is,
+
+\begin{equation}
+|f(x_{k+1})| < |f(x_k)|.
+\end{equation}
+
+This condition helps prevent large and potentially unstable updates, especially when the derivative is small or when the function is highly nonlinear.
+
+Compared to the standard Newton method, the damped version generally converges more reliably from a wider range of initial guesses. However, this increased robustness comes at the cost of slower convergence, particularly when the method is already close to the solution.
+
+The damped Newton method provides a useful balance between efficiency and stability, and it also establishes a direct connection with optimization techniques, where similar step size control strategies are widely used.
+
+\section{Brent's Method}
+
+Brent's method is a hybrid root-finding algorithm that combines the reliability of bracketing methods, such as the bisection method, with the efficiency of interpolation-based methods like the secant method. It is widely regarded as one of the most effective and robust methods for solving nonlinear equations in practice \cite{atkinson, chapra}.
+
+The method maintains an interval \([a, b]\) such that \( f(a) \cdot f(b) < 0 \), ensuring that a root is always bracketed. At each iteration, Brent's method attempts to use a faster interpolation technique, such as the secant method or inverse quadratic interpolation, to estimate the root. If the interpolation step is not reliable, the method falls back to the bisection step to guarantee convergence \cite{cs357}.
+
+Unlike pure methods, Brent's method dynamically selects between different strategies based on the behavior of the function. This adaptive approach allows it to achieve both robustness and efficiency.
+
+In inverse quadratic interpolation, three points are used to construct a quadratic approximation of the inverse function, and the root of this approximation is taken as the next iterate. This typically leads to faster convergence compared to linear interpolation methods such as the secant method.
+
+One of the key advantages of Brent's method is that it does not require the computation of derivatives while still achieving a convergence rate that is often comparable to Newton-type methods. At the same time, the bracketing condition ensures that the method will not diverge, making it more reliable than open methods such as the secant or Newton methods \cite{chapra}.
+
+Due to this combination of speed and robustness, Brent's method is commonly used in practical numerical libraries and is often preferred when both reliability and efficiency are required.
+
+\section{Illustrative Example}
+
+In order to make the behavior of the methods more concrete, the same nonlinear equation is used throughout this chapter:
+\begin{equation}
+f(x)=x^3-x-2=0.
+\end{equation}
+
+Since
+\[
+f(1)=-2 \qquad \text{and} \qquad f(2)=4,
+\]
+there is at least one real root in the interval \([1,2]\). The approximate root is
+\[
+x^* \approx 1.52138.
+\]
+
+This example is suitable for all five methods discussed in this chapter. The aim here is not to give a fully detailed manual computation for every iteration, but to show a short sequence of iterates so that the convergence behavior can be observed clearly.
+
+\subsection{Bisection Method}
+
+For the bisection method, the initial interval is taken as \([1,2]\). At each step, the midpoint of the current interval is computed and the interval is updated according to the sign of the function.
+
+\begin{table}[h!]
+\centering
+\caption{Bisection method for \(f(x)=x^3-x-2\)}
+\label{tab:bisection_example}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Iteration & \(a_k\) & \(b_k\) & Midpoint \(c_k\) & \(f(c_k)\) \\ \hline
+1 & 1.00000 & 2.00000 & 1.50000 & -0.12500 \\ \hline
+2 & 1.50000 & 2.00000 & 1.75000 & 1.60938 \\ \hline
+3 & 1.50000 & 1.75000 & 1.62500 & 0.66602 \\ \hline
+4 & 1.50000 & 1.62500 & 1.56250 & 0.25220 \\ \hline
+5 & 1.50000 & 1.56250 & 1.53125 & 0.05911 \\ \hline
+\end{tabular}
+\end{table}
+
+The method converges steadily, and the root always remains inside the updated interval. However, the progress is relatively slow, since the interval length is only halved at each step.
+
+\subsection{Secant Method}
+
+For the secant method, the initial approximations are chosen as
+\[
+x_0=1, \qquad x_1=2.
+\]
+The iteration formula is
+\[
+x_{k+1}=x_k-f(x_k)\frac{x_k-x_{k-1}}{f(x_k)-f(x_{k-1})}.
+\]
+
+\begin{table}[h!]
+\centering
+\caption{Secant method for \(f(x)=x^3-x-2\)}
+\label{tab:secant_example}
+\begin{tabular}{|c|c|c|}
+\hline
+Iteration & \(x_k\) & \(f(x_k)\) \\ \hline
+0 & 1.00000 & -2.00000 \\ \hline
+1 & 2.00000 & 4.00000 \\ \hline
+2 & 1.33333 & -0.96296 \\ \hline
+3 & 1.46269 & -0.33334 \\ \hline
+4 & 1.53117 & 0.05863 \\ \hline
+5 & 1.52093 & -0.00269 \\ \hline
+\end{tabular}
+\end{table}
+
+Compared to bisection, the secant method moves toward the root more quickly. In this example, the iterates approach the solution efficiently without requiring the derivative of the function.
+
+\subsection{Newton's Method}
+
+For Newton's method, the initial guess is taken as
+\[
+x_0=1.5.
+\]
+Since
+\[
+f(x)=x^3-x-2, \qquad f'(x)=3x^2-1,
+\]
+the iteration formula becomes
+\[
+x_{k+1}=x_k-\frac{x_k^3-x_k-2}{3x_k^2-1}.
+\]
+
+\begin{table}[h!]
+\centering
+\caption{Newton's method for \(f(x)=x^3-x-2\)}
+\label{tab:newton_example}
+\begin{tabular}{|c|c|c|}
+\hline
+Iteration & \(x_k\) & \(f(x_k)\) \\ \hline
+0 & 1.50000 & -0.12500 \\ \hline
+1 & 1.52174 & 0.00214 \\ \hline
+2 & 1.52138 & 0.00000 \\ \hline
+3 & 1.52138 & 0.00000 \\ \hline
+4 & 1.52138 & 0.00000 \\ \hline
+\end{tabular}
+\end{table}
+
+The convergence is very rapid. After only a few iterations, the approximation is already very close to the root. This behavior is consistent with the quadratic convergence of Newton's method near a simple root.
+
+\subsection{Damped Newton Method}
+
+For the damped Newton method, the same function is used, but the Newton step is multiplied by a damping parameter. Here, the initial guess is chosen as
+\[
+x_0=2,
+\]
+and a constant damping parameter
+\[
+\alpha=0.8
+\]
+is used for illustration. The iteration formula is
+\[
+x_{k+1}=x_k-\alpha \frac{f(x_k)}{f'(x_k)}.
+\]
+
+\begin{table}[h!]
+\centering
+\caption{Damped Newton method for \(f(x)=x^3-x-2\)}
+\label{tab:damped_newton_example}
+\begin{tabular}{|c|c|c|}
+\hline
+Iteration & \(x_k\) & \(f(x_k)\) \\ \hline
+0 & 2.00000 & 4.00000 \\ \hline
+1 & 1.70909 & 1.28315 \\ \hline
+2 & 1.57686 & 0.34397 \\ \hline
+3 & 1.53426 & 0.07730 \\ \hline
+4 & 1.52406 & 0.01594 \\ \hline
+5 & 1.52192 & 0.00321 \\ \hline
+\end{tabular}
+\end{table}
+
+The method converges more cautiously than the classical Newton method. Although it is slower in this example, it provides a more controlled sequence of iterates and may be more reliable when the initial guess is not sufficiently good.
+
+\subsection{Brent's Method}
+
+Brent's method starts with a bracketing interval, so the initial interval \([1,2]\) is again suitable. The method combines bisection, secant, and inverse quadratic interpolation steps. Because of this hybrid structure, it usually converges faster than bisection while preserving the safety of a bracketing method.
+
+A possible sequence of approximations for this example is shown below.
+
+\begin{table}[h!]
+\centering
+\caption{Brent's method for \(f(x)=x^3-x-2\)}
+\label{tab:brent_example}
+\begin{tabular}{|c|c|c|}
+\hline
+Iteration & Approximation & \(f(x_k)\) \\ \hline
+1 & 1.33333 & -0.96298 \\ \hline
+2 & 1.58280 & 0.38252 \\ \hline
+3 & 1.51188 & -0.05605 \\ \hline
+4 & 1.52094 & -0.00261 \\ \hline
+5 & 1.52138 & 0.00000 \\ \hline
+\end{tabular}
+\end{table}
+
+The method reaches the root in a small number of iterations. In this example, it is both faster than bisection and more robust than the open methods.
+
+\subsection{Comparison for the Example}
+
+The numerical results obtained above show clear differences among the methods. Bisection is the slowest method, but it behaves in a very predictable way. Secant converges faster and avoids derivative evaluation. Newton's method gives the fastest convergence in this example, while damped Newton sacrifices some speed in exchange for additional stability. Brent's method combines reliability and efficiency in a balanced manner.
+
+\begin{table}[h!]
+\centering
+\caption{General comparison of the methods for the illustrative example}
+\label{tab:single_example_comparison}
+\begin{tabular}{|l|l|l|l|}
+\hline
+Method & Initial Value(s) & Approximate Root & General Behavior \\ \hline
+Bisection & \([1,2]\) & \(1.52138\) & Reliable but slow \\ \hline
+Secant & \(x_0=1,\ x_1=2\) & \(1.52138\) & Faster, derivative-free \\ \hline
+Newton & \(x_0=1.5\) & \(1.52138\) & Very fast near the root \\ \hline
+Damped Newton & \(x_0=2,\ \alpha=0.8\) & \(1.52138\) & Safer, but slower \\ \hline
+Brent & \([1,2]\) & \(1.52138\) & Robust and efficient \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Failure Cases}
+
+\paragraph{Bisection Method.}
+The bisection method requires an initial interval where the function changes sign. Consider
+\[
+f(x) = x^2 + 1.
+\]
+For any real numbers \(a\) and \(b\), we have \(f(a) > 0\) and \(f(b) > 0\). For example, on the interval \([-1, 1]\),
+\[
+f(-1) = 2, \qquad f(1) = 2.
+\]
+Since there is no sign change, the method cannot be applied and no iterations can be performed.
+
+\paragraph{Secant Method.}
+The secant method may fail when two consecutive function values are very close, leading to a nearly zero denominator. Consider
+\[
+f(x) = (x - 1)^2,
+\]
+with initial guesses
+\[
+x_0 = 0.9, \qquad x_1 = 1.1.
+\]
+Then
+\[
+f(x_0) = 0.01, \qquad f(x_1) = 0.01.
+\]
+The update formula
+\[
+x_{k+1} = x_k - f(x_k)\frac{x_k - x_{k-1}}{f(x_k) - f(x_{k-1})}
+\]
+contains the denominator \(f(x_k) - f(x_{k-1})\), which becomes zero in this case. As a result, the method breaks down and cannot proceed.
+
+\paragraph{Newton's Method.}
+Newton's method may diverge when the derivative is small. Consider
+\[
+f(x) = x^3,
+\]
+with initial guess \(x_0 = 0.1\). Then
+\[
+f'(x) = 3x^2, \qquad f'(0.1) = 0.03.
+\]
+The first iteration gives
+\[
+x_1 = x_0 - \frac{f(x_0)}{f'(x_0)} = 0.1 - \frac{0.001}{0.03} \approx 0.0667.
+\]
+Subsequent iterations produce only small changes:
+\[
+x_2 \approx 0.0444, \quad x_3 \approx 0.0296.
+\]
+The convergence becomes very slow because the derivative is close to zero near the root.
+
+\paragraph{Damped Newton Method.}
+The damped Newton method may become inefficient if the step size is reduced too aggressively. Consider again
+\[
+f(x) = x^3 - x - 2,
+\]
+with initial guess \(x_0 = 2\) and a small damping parameter, for example \(\alpha = 0.1\).
+
+The Newton step at \(x_0\) is approximately \(-0.3636\), so the damped update becomes
+\[
+x_1 = 2 + 0.1 \cdot (-0.3636) \approx 1.9636.
+\]
+The reduction in the function value is limited:
+\[
+f(2) = 4, \qquad f(1.9636) \approx 3.600.
+\]
+Compared to the standard Newton method, which moves directly close to the root, the damped version progresses much more slowly. Repeated small steps lead to inefficient convergence.
+
+\paragraph{Brent's Method.}
+Brent's method requires a valid bracketing interval. Consider again
+\[
+f(x) = x^2 + 1.
+\]
+On the interval \([-1, 1]\),
+\[
+f(-1) = 2, \qquad f(1) = 2,
+\]
+so there is no sign change. Since Brent's method relies on bracketing, it cannot be initialized in this case. Even though the method is robust, it still depends on the existence of an initial interval containing a root.
+
+\section{Comparison of Methods}
+
+In this section, the numerical methods discussed for solving single nonlinear equations are compared in terms of convergence speed, robustness, and computational requirements.
+
+The bisection method is the most reliable among all the methods considered. As long as the initial interval satisfies the sign change condition and the function is continuous, convergence to a root is guaranteed. However, its linear rate of convergence makes it relatively slow, especially when high accuracy is required \cite{burden, atkinson}.
+
+The secant method improves upon the bisection method by achieving a faster, superlinear convergence rate without requiring the computation of derivatives. This makes it more efficient in many cases. However, it does not guarantee convergence and may fail if the initial guesses are not chosen appropriately \cite{kelley}.
+
+Newton's method offers the fastest convergence among the methods discussed, with quadratic convergence under suitable conditions. When the initial guess is sufficiently close to the root and the derivative is well-behaved, the method is highly efficient. Nevertheless, its performance is sensitive to the initial guess, and it requires the evaluation of the derivative, which may not always be practical \cite{burden, kelley}.
+
+The damped Newton method improves the robustness of the classical Newton method by introducing a step size parameter. This modification helps prevent divergence and allows the method to converge from a wider range of initial guesses. However, this increased stability often comes at the cost of slower convergence compared to the standard Newton method \cite{kelley}.
+
+Brent's method combines the strengths of both bracketing and open methods. It maintains the guaranteed convergence of the bisection method while incorporating faster interpolation steps similar to the secant method. As a result, it provides a good balance between robustness and efficiency and is often preferred in practical applications \cite{chapra, cs357}.
+
+Overall, there is a trade-off between convergence speed and robustness. Methods such as Newton's method are very fast but sensitive to initial conditions, while methods like bisection are slower but more reliable. Hybrid approaches such as Brent's method aim to achieve both reliability and efficiency, making them particularly useful in real-world problems.

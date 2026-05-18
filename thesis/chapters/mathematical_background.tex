@@ -1,0 +1,109 @@
+\section{Functions and Roots}
+
+In numerical analysis, the problem of solving a nonlinear equation is commonly expressed as finding a root of a function. A root of a function \( f(x) \) is a value \( x^* \in \mathbb{R} \) such that
+
+\begin{equation}
+f(x^*) = 0.
+\end{equation}
+
+Depending on the structure of the function, there may exist a single root, multiple roots, or no real roots. In many practical applications, the function \( f \) is continuous, and root-finding methods often rely on this property \cite{burden, atkinson}.
+
+\section{Fixed-Point Formulation}
+
+Many numerical methods are based on transforming the root-finding problem into a fixed-point problem. Instead of solving \( f(x) = 0 \), the equation is rewritten in the form
+
+\begin{equation}
+x = g(x),
+\end{equation}
+
+where \( g \) is a suitably defined function.
+
+A point \( x^* \) is called a fixed point of \( g \) if
+
+\begin{equation}
+x^* = g(x^*).
+\end{equation}
+
+If \( g \) satisfies certain conditions, iterative methods of the form
+
+\begin{equation}
+x_{k+1} = g(x_k)
+\end{equation}
+
+can be used to approximate the solution \cite{burden}.
+
+\section{Convergence of Iterative Methods}
+
+An iterative method generates a sequence \( \{x_k\} \) that is expected to approach the true solution \( x^* \). The method is said to converge if
+
+\begin{equation}
+\lim_{k \to \infty} x_k = x^*.
+\end{equation}
+
+The convergence of an iterative method depends on several factors, including the choice of the initial guess and the properties of the function.
+
+A common condition for convergence in fixed-point iteration is that the function \( g \) is a contraction, meaning that there exists a constant \( L < 1 \) such that
+
+\begin{equation}
+|g(x) - g(y)| \leq L |x - y|
+\end{equation}
+
+for all \( x, y \) in a neighborhood of the fixed point \cite{burden, cs357}.
+
+\section{Order of Convergence}
+
+The speed at which an iterative method converges is described by its order of convergence. Let \( e_k = |x_k - x^*| \) denote the error at iteration \( k \). The method is said to have order \( p \) if there exists a constant \( C > 0 \) such that
+
+\begin{equation}
+e_{k+1} \approx C e_k^p
+\end{equation}
+
+for sufficiently large \( k \).
+
+For example:
+\begin{itemize}
+    \item \( p = 1 \): linear convergence
+    \item \( p = 2 \): quadratic convergence
+\end{itemize}
+
+Higher-order methods generally converge faster, but they may require more computational effort per iteration \cite{burden}.
+
+\section{Norms and Vector Functions}
+
+For systems of nonlinear equations, it is necessary to measure the size of vectors. A commonly used norm is the Euclidean norm, defined as
+
+\begin{equation}
+\|\mathbf{x}\| = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}.
+\end{equation}
+
+Norms are used to quantify errors and convergence in higher-dimensional problems \cite{atkinson}.
+
+\section{Jacobian Matrix}
+
+For a system of nonlinear equations \( F(\mathbf{x}) = \mathbf{0} \), the Jacobian matrix plays a central role in many numerical methods.
+
+The Jacobian matrix is defined as
+
+\begin{equation}
+J_F(\mathbf{x}) =
+\begin{bmatrix}
+\frac{\partial f_1}{\partial x_1} & \cdots & \frac{\partial f_1}{\partial x_n} \\
+\vdots & \ddots & \vdots \\
+\frac{\partial f_n}{\partial x_1} & \cdots & \frac{\partial f_n}{\partial x_n}
+\end{bmatrix}.
+\end{equation}
+
+It generalizes the concept of the derivative to multivariable functions and is essential in methods such as Newton’s method for systems \cite{kelley}.
+
+\section{Stopping Criteria}
+
+In practical computations, iterative methods cannot run indefinitely. Therefore, a stopping criterion is required.
+
+Common stopping criteria include:
+\begin{itemize}
+    \item \( |x_{k+1} - x_k| < \varepsilon \)
+    \item \( |f(x_k)| < \varepsilon \)
+    \item maximum number of iterations reached
+\end{itemize}
+
+where \( \varepsilon \) is a predefined tolerance \cite{burden, cs357}.

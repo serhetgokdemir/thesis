@@ -1,0 +1,83 @@
+\chapter{Introduction}
+
+\section{Motivation Behind Numerical Methods}
+
+When attempting to solve a mathematical problem, two general approaches can be considered: analytical solutions and numerical solutions. Analytical solution methods aim to obtain the solution of a given problem exactly and in closed form. Many classical mathematical problems can be solved using such methods, allowing the exact value of the solution to be determined.
+
+However, for a significant portion of problems encountered in practice, analytical solutions either do not exist or are too costly to obtain. In particular, when dealing with nonlinear equations and systems of nonlinear equations, closed-form solutions are often not available. In such cases, numerical methods are employed.
+
+Rather than obtaining the exact solution directly, numerical methods aim to compute an approximate value of the solution with a certain level of accuracy. These methods typically rely on iterative algorithms that progressively improve the approximation step by step until the desired level of accuracy is achieved.
+
+Different numerical methods have their own advantages and disadvantages in terms of properties such as convergence rate, computational cost, and stability. Therefore, selecting an appropriate method for a given problem plays an important role in the study of numerical analysis \cite{burden, atkinson}.
+
+\section{Nonlinear Equations and Systems}
+
+A nonlinear equation is an equation of the form
+\begin{equation}
+f(x) = 0,
+\end{equation}
+\noindent where \( f \) is a nonlinear function. In contrast to linear equations, nonlinear equations may exhibit multiple roots, no real roots, or complex solution structures, making their analysis and solution more challenging \cite{burden, atkinson}.
+
+A simple example of a nonlinear equation is
+
+\begin{equation}
+f(x) = x^3 - x - 2 = 0
+\end{equation}
+
+for which no closed-form analytical solution exists in a simple form. Such equations commonly arise in various scientific and engineering applications, including physics, optimization, and computational modeling.
+
+In many practical cases, it is not possible to determine the exact solution of a nonlinear equation analytically. Even when an analytical solution exists, it may be too complicated or computationally expensive to evaluate. For this reason, numerical methods are employed to approximate the roots of nonlinear equations with a desired level of accuracy.
+
+The problem can be extended to systems of nonlinear equations. 
+A nonlinear system can be written in vector form as
+\begin{equation}
+F(\mathbf{x}) = \mathbf{0},
+\end{equation}
+where
+\begin{equation}
+F : \mathbb{R}^n \to \mathbb{R}^n
+\end{equation}
+is a vector-valued nonlinear function.
+
+For example, consider the system
+\begin{equation}
+\begin{cases}
+x^2 + y^2 - 4 = 0, \\
+x - y - 1 = 0.
+\end{cases}
+\end{equation}
+
+\noindent Such systems arise naturally in applications where multiple variables interact in a nonlinear manner.
+
+Solving nonlinear systems is generally more complex than solving single nonlinear equations. In particular, the solution methods often require the use of the Jacobian matrix, defined as
+
+\begin{equation}
+J_F(\mathbf{x}) =
+\begin{bmatrix}
+\frac{\partial f_1}{\partial x_1} & \frac{\partial f_1}{\partial x_2} & \cdots & \frac{\partial f_1}{\partial x_n} \\
+\frac{\partial f_2}{\partial x_1} & \frac{\partial f_2}{\partial x_2} & \cdots & \frac{\partial f_2}{\partial x_n} \\
+\vdots & \vdots & \ddots & \vdots \\
+\frac{\partial f_n}{\partial x_1} & \frac{\partial f_n}{\partial x_2} & \cdots & \frac{\partial f_n}{\partial x_n}
+\end{bmatrix}.
+\end{equation}
+
+which generalizes the concept of the derivative to higher dimensions \cite{kelley}.
+In this thesis, both single nonlinear equations and systems of nonlinear equations are considered. The focus is on numerical methods that iteratively approximate the solution and their behavior in terms of convergence, computational cost, and robustness.
+
+\section{Objectives of the Thesis}
+
+The main objective of this thesis is to study numerical methods for solving nonlinear equations and systems of nonlinear equations. These problems arise frequently in various fields of science and engineering, and in many cases, their exact solutions cannot be obtained analytically. As a result, numerical approaches play a fundamental role in approximating their solutions \cite{burden, atkinson}.
+
+In this context, the thesis focuses on two main problem classes. First, numerical methods for solving single nonlinear equations of the form \( f(x) = 0 \) are investigated. Classical methods such as bisection, secant, and Newton-type methods are examined in terms of their underlying principles and convergence behavior.
+
+Second, the study extends to systems of nonlinear equations of the form \( F(\mathbf{x}) = \mathbf{0} \). These systems are generally more complex and require more advanced techniques, particularly those involving the Jacobian matrix. Methods for solving such systems are analyzed within a similar theoretical framework.
+
+In addition to the theoretical analysis, the selected numerical methods are implemented using a computational tool. The implementations are used to evaluate the practical performance of the methods through numerical experiments. In particular, the methods are compared in terms of convergence behavior, computational efficiency, and robustness.
+
+Overall, the aim of this thesis is to provide a clear and structured examination of numerical methods for nonlinear problems, combining theoretical foundations with computational analysis.
+
+\section{Structure of the Thesis}
+
+This section will provide an overview of the structure of the thesis, briefly describing the content of each chapter.
+
+\textit{[This section will be completed after the thesis is finalized.]}
