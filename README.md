@@ -59,20 +59,7 @@ thesis-nonlinear-equations/
 │   │   ├── newton_system.py
 │   │   └── broyden.py
 │   │
-│   ├── utils/
-│   │   ├── stopping_criteria.py
-│   │   ├── norms.py
-│   │   ├── derivatives.py
-│   │   ├── jacobian.py
-│   │   └── plotting.py
-│   │
 │   └── __init__.py
-│
-├── experiments/
-│   ├── single_variable_experiments.py
-│   ├── system_experiments.py
-│   ├── generate_tables.py 
-│   └── generate_plots.py 
 │
 ├── tests/
 │   ├── test_bisection.py
@@ -83,15 +70,9 @@ thesis-nonlinear-equations/
 │   ├── test_newton_system.py
 │   └── test_broyden.py
 │
-├── data/
-│   ├── raw/
-│   └── generated_results/
-│       ├── csv/
-│       └── tables/
-│
-└── notebooks/
-	├── single_variable_demo.ipynb
-	└── systems_demo.ipynb
+└── experiments/
+	├── single_variables_experiment.ipynb
+	└── systems_experiment.ipynb
 
 # Mevcut ekstra klasörler
 - checkpoints/ : Tarihsel ilerleme PDF’leri (ör. 03.17.2026.pdf)
