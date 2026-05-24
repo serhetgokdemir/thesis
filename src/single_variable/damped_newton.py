@@ -6,7 +6,7 @@ def damped_newton(
     x0: float,
     tol: float = 1e-8,
     max_iter: int = 100,
-    alpha: float = 1.0,
+    alpha: float = 0.8,
     backtracking: bool = False,
     min_alpha: float = 1e-4,
     rho: float = 0.5
