@@ -119,4 +119,22 @@ jupyter lab
 
 ## Thesis Document
 
-The LaTeX source code for the thesis is located in the `thesis/` directory. The main file is `thesis/main.tex`. You can compile the document to PDF using a LaTeX distribution like TeX Live, MiKTeX, or MacTeX.
+The thesis is written in LaTeX and can be compiled from the `latex/` directory. The `latexmk` tool is used for compilation, which automates the process of generating a PDF from the source files.
+
+### Compiling the Thesis
+
+To compile the thesis and generate a PDF, navigate to the `latex/` directory and run the following command:
+
+```bash
+cd latex
+latexmk -pdf -outdir=compiled main.tex
+```
+
+### Cleaning Up Compilation Files
+
+After compilation, you may want to clean up the generated files. To do this, you can run the following command from the `latex/` directory:
+
+```bash
+latexmk -C -outdir=compiled main.tex
+```
+
