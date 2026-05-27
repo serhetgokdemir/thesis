@@ -27,6 +27,45 @@ Despite its strong convergence properties, the method has several limitations. T
 
 For these reasons, modifications and alternative methods are often considered in practice, particularly when dealing with large-scale or ill-conditioned systems.
 
+\paragraph{Implementation Example.}
+
+The following implementation shows the core computational structure of Newton's method for nonlinear systems. At each iteration, the Jacobian system is solved in order to compute the Newton step.
+
+\begin{lstlisting}[caption={Python implementation of Newton's method for systems}, label={lst:newton_system}]
+def newton_system(F, J, x0, tol=1e-8, max_iter=100):
+
+    x = np.array(x0, dtype=float)
+    history = []
+
+    for i in range(max_iter):
+
+        Fx = F(x)
+        norm_Fx = np.linalg.norm(Fx)
+
+        if norm_Fx <= tol:
+            return x, history
+
+        Jx = J(x)
+        s = np.linalg.solve(Jx, -Fx)
+
+        x_next = x + s
+        step_norm = np.linalg.norm(s)
+
+        history.append({
+            "iteration": i,
+            "x": x.tolist(),
+            "norm_f": norm_Fx,
+            "step_norm": step_norm
+        })
+
+        if step_norm <= tol:
+            return x_next, history
+
+        x = x_next
+
+    return x, history
+\end{lstlisting}
+
 \section{Convergence Analysis}
 
 The convergence behavior of Newton's method for systems is similar to the scalar case, but it depends on additional factors related to the structure of the system.
@@ -89,6 +128,50 @@ The performance of the method also depends on the choice of the initial approxim
 
 Despite these limitations, Broyden's method is widely used in practice due to its efficiency and its ability to handle problems where the Jacobian is difficult to compute \cite{kelley}.
 
+\paragraph{Implementation Example.}
+
+The following implementation fragment illustrates the main structure of Broyden's method. Instead of recomputing the exact Jacobian matrix at every iteration, the method updates an approximation using a rank-one correction formula.
+
+\begin{lstlisting}[caption={Python implementation of Broyden's method}, label={lst:broyden}]
+def broyden(F, x0, B0=None, tol=1e-8, max_iter=100):
+
+    x = np.array(x0, dtype=float)
+
+    if B0 is None:
+        B = np.eye(len(x))
+    else:
+        B = np.array(B0, dtype=float)
+
+    Fx = F(x)
+    history = []
+
+    for i in range(max_iter):
+
+        s = np.linalg.solve(B, -Fx)
+
+        x_next = x + s
+        Fx_next = F(x_next)
+
+        history.append({
+            "iteration": i,
+            "x": x.tolist(),
+            "norm_f": np.linalg.norm(Fx),
+            "step_norm": np.linalg.norm(s)
+        })
+
+        if np.linalg.norm(Fx_next) <= tol:
+            return x_next, history
+
+        y = Fx_next - Fx
+
+        B += np.outer((y - B @ s), s) / (s @ s)
+
+        x = x_next
+        Fx = Fx_next
+
+    return x, history
+\end{lstlisting}
+
 \section{Illustrative Example}
 
 To illustrate the behavior of the methods for systems of nonlinear equations, consider the following system:
@@ -108,24 +191,181 @@ The same system is used to demonstrate both Newton's method and Broyden's method
 
 \subsection{Newton Method for Systems}
 
-For Newton's method, the Jacobian matrix is given by
+Consider the nonlinear system
 \begin{equation}
-J_F(\mathbf{x}) =
+\begin{cases}
+x^2 + y^2 - 4 = 0, \\
+x - y - 1 = 0.
+\end{cases}
+\end{equation}
+
+The initial approximation is selected as
+\[
+\mathbf{x}_0=(2,1).
+\]
+
+This starting point is chosen because it lies relatively close to the expected intersection region of the circle and the line. In Newton-type methods, selecting an initial approximation near the solution generally improves convergence behavior and reduces the risk of divergence.
+
+The vector-valued function is
+\[
+F(x,y)=
+\begin{bmatrix}
+x^2+y^2-4 \\
+x-y-1
+\end{bmatrix},
+\]
+and the Jacobian matrix is
+\[
+J_F(x,y)=
 \begin{bmatrix}
 2x & 2y \\
 1 & -1
 \end{bmatrix}.
-\end{equation}
-
-Starting from the initial guess
-\[
-\mathbf{x}_0 = (2,\ 1),
 \]
-the method generates a sequence of approximations.
+
+At the initial point
+\[
+(2,1),
+\]
+the function value becomes
+\[
+F(2,1)=
+\begin{bmatrix}
+2^2+1^2-4 \\
+2-1-1
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 \\
+0
+\end{bmatrix}.
+\]
+
+The Jacobian matrix evaluated at the initial point is
+\[
+J_F(2,1)=
+\begin{bmatrix}
+4 & 2 \\
+1 & -1
+\end{bmatrix}.
+\]
+
+Newton's method requires solving the linear system
+\[
+J_F(\mathbf{x}_0)\mathbf{s}_0
+=
+-F(\mathbf{x}_0).
+\]
+
+Thus,
+\[
+\begin{bmatrix}
+4 & 2 \\
+1 & -1
+\end{bmatrix}
+\begin{bmatrix}
+s_1 \\
+s_2
+\end{bmatrix}
+=
+\begin{bmatrix}
+-1 \\
+0
+\end{bmatrix}.
+\]
+
+From the second equation,
+\[
+s_1-s_2=0,
+\]
+so
+\[
+s_1=s_2.
+\]
+
+Substituting into the first equation:
+\[
+4s_1+2s_1=-1.
+\]
+
+Therefore,
+\[
+6s_1=-1,
+\qquad
+s_1=s_2=-\frac16.
+\]
+
+The Newton step is therefore
+\[
+\mathbf{s}_0=
+\left(
+-\frac16,
+-\frac16
+\right).
+\]
+
+Updating the approximation:
+\[
+\mathbf{x}_1
+=
+\mathbf{x}_0+\mathbf{s}_0
+=
+\left(
+2-\frac16,
+1-\frac16
+\right).
+\]
+
+Thus,
+\[
+\mathbf{x}_1
+=
+(1.83333,\ 0.83333).
+\]
+
+Evaluating the residual norm:
+\[
+\|F(\mathbf{x}_1)\|
+\approx
+0.05556.
+\]
+
+At the second iteration, the Jacobian matrix becomes
+\[
+J_F(1.83333,0.83333)
+=
+\begin{bmatrix}
+3.66666 & 1.66666 \\
+1 & -1
+\end{bmatrix}.
+\]
+
+Solving the corresponding Newton system produces the next approximation
+\[
+\mathbf{x}_2
+=
+(1.82292,\ 0.82292),
+\]
+with residual norm
+\[
+\|F(\mathbf{x}_2)\|
+\approx
+0.00022.
+\]
+
+A third iteration gives
+\[
+\mathbf{x}_3
+=
+(1.82288,\ 0.82288),
+\]
+where the residual becomes extremely small.
+
+Table 4.1 summarizes the iteration sequence.
 
 \begin{table}[h!]
 \centering
-\caption{Newton method for the system}
+\caption{Newton method for the nonlinear system}
 \label{tab:newton_system_example}
 \begin{tabular}{|c|c|c|c|}
 \hline
@@ -137,35 +377,148 @@ Iteration & \(x_k\) & \(y_k\) & \(\|F(\mathbf{x}_k)\|\) \\ \hline
 \end{tabular}
 \end{table}
 
-The method converges rapidly to the solution. After only a few iterations, the residual becomes very small. This behavior reflects the quadratic convergence of Newton's method near the root.
+The numerical results demonstrate the rapid convergence behavior of Newton's method for nonlinear systems. Once the iteration approaches the solution, the residual norm decreases very quickly, which is consistent with the quadratic convergence properties discussed earlier.
 
 \subsection{Broyden's Method for Systems}
 
-For Broyden's method, the same initial guess is used:
-\[
-\mathbf{x}_0 = (2,\ 1).
-\]
-The initial Jacobian approximation is taken as the identity matrix.
+For Broyden's method, the same nonlinear system is considered:
+\begin{equation}
+\begin{cases}
+x^2 + y^2 - 4 = 0, \\
+x - y - 1 = 0.
+\end{cases}
+\end{equation}
 
-\subsection{Broyden's Method for Systems}
-
-For Broyden's method, the same initial guess is used:
+The initial approximation is again selected as
 \[
-\mathbf{x}_0 = (2,\ 1).
+\mathbf{x}_0=(2,1).
 \]
-In order to obtain a stable and informative sequence, the initial Jacobian approximation is chosen as
+
+As in Newton's method, this point is chosen because it lies relatively close to the expected solution and produces a well-defined Jacobian structure.
+
+Unlike Newton's method, Broyden's method does not recompute the exact Jacobian matrix at every iteration. Instead, the method constructs an approximation that is updated iteratively.
+
+For the initial approximation of the Jacobian matrix, the exact Jacobian evaluated at the initial point is used:
 \[
-B_0 =
+B_0=
 \begin{bmatrix}
 4 & 2 \\
 1 & -1
-\end{bmatrix},
+\end{bmatrix}.
 \]
-which corresponds to the exact Jacobian at the initial point.
+
+This choice provides a stable starting approximation and improves the early convergence behavior of the method.
+
+At the initial iteration, the nonlinear system is
+\[
+F(2,1)=
+\begin{bmatrix}
+1 \\
+0
+\end{bmatrix}.
+\]
+
+The step is obtained by solving
+\[
+B_0\mathbf{s}_0
+=
+-F(\mathbf{x}_0).
+\]
+
+Thus,
+\[
+\begin{bmatrix}
+4 & 2 \\
+1 & -1
+\end{bmatrix}
+\begin{bmatrix}
+s_1 \\
+s_2
+\end{bmatrix}
+=
+\begin{bmatrix}
+-1 \\
+0
+\end{bmatrix}.
+\]
+
+This produces the same first step as Newton's method:
+\[
+\mathbf{s}_0=
+\left(
+-\frac16,
+-\frac16
+\right).
+\]
+
+Therefore,
+\[
+\mathbf{x}_1
+=
+(1.83333,\ 0.83333).
+\]
+
+The residual norm becomes
+\[
+\|F(\mathbf{x}_1)\|
+\approx
+0.05556.
+\]
+
+At this stage, instead of recomputing the exact Jacobian, Broyden's method updates the approximation matrix using the vectors
+\[
+\mathbf{s}_0
+=
+\mathbf{x}_1-\mathbf{x}_0
+\]
+and
+\[
+\mathbf{y}_0
+=
+F(\mathbf{x}_1)-F(\mathbf{x}_0).
+\]
+
+The update formula is
+\[
+B_{1}
+=
+B_0
++
+\frac{
+(\mathbf{y}_0-B_0\mathbf{s}_0)\mathbf{s}_0^T
+}{
+\mathbf{s}_0^T\mathbf{s}_0
+}.
+\]
+
+Using the updated approximation matrix, the next step is computed and the iteration proceeds.
+
+At the second iteration, the approximation becomes
+\[
+\mathbf{x}_2
+=
+(1.82353,\ 0.82353),
+\]
+with residual norm
+\[
+\|F(\mathbf{x}_2)\|
+\approx
+0.00346.
+\]
+
+A third iteration gives
+\[
+\mathbf{x}_3
+=
+(1.82288,\ 0.82288),
+\]
+where the residual norm becomes very small.
+
+Table 4.2 summarizes the iterations.
 
 \begin{table}[h!]
 \centering
-\caption{Broyden method for the system}
+\caption{Broyden method for the nonlinear system}
 \label{tab:broyden_example}
 \begin{tabular}{|c|c|c|c|}
 \hline
@@ -178,7 +531,7 @@ Iteration & \(x_k\) & \(y_k\) & \(\|F(\mathbf{x}_k)\|\) \\ \hline
 \end{tabular}
 \end{table}
 
-The method converges more slowly than Newton's method, but it still reaches the solution efficiently. In this example, the use of an initial Jacobian approximation close to the true Jacobian improves the stability of the iterates and leads to a smooth convergence pattern.
+Compared to Newton's method, Broyden's method converges more slowly because it uses approximate Jacobian information. However, the method avoids repeated Jacobian evaluations, which may significantly reduce computational cost in large-scale problems or applications where derivative calculations are expensive.
 
 \subsection{Comparison for the Example}
 
@@ -272,10 +625,10 @@ In practice, such situations are handled by introducing safeguards, such as skip
 
 \section{Comparison of Methods}
 
-In the context of systems of nonlinear equations, Newton's method and Broyden's method exhibit different trade-offs.
+There are trade-offs between these two methods.
 
-Newton's method is generally more accurate and converges faster when the Jacobian matrix is well-behaved and the initial guess is sufficiently close to the solution. However, the need to compute and solve systems involving the Jacobian matrix increases the computational cost.
+Newton's method is usually more accurate and converges more quickly provided that the Jacobian matrix is well-conditioned and the starting point is close enough to the root. The requirement to calculate the Jacobian and solve systems using the Jacobian matrix is computationally expensive.
 
-Broyden's method, on the other hand, reduces computational effort by avoiding explicit Jacobian evaluations. This makes it more suitable for large-scale problems or problems where derivative information is difficult to obtain.
+In Broyden's method, on the contrary, the computational overhead is avoided by not calculating the Jacobian explicitly.
 
-Overall, Newton's method is preferred when accuracy and fast convergence are critical, while Broyden's method is advantageous when computational efficiency is more important \cite{kelley, chapra}.
+In general, Newton's method is better than Broyden's when higher accuracy and speed of convergence are essential. Conversely, Broyden's method is preferred when computational efficiency is crucial \cite{kelley, chapra}.

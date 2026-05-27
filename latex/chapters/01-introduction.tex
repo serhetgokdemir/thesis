@@ -2,13 +2,13 @@
 
 \section{Motivation Behind Numerical Methods}
 
-When attempting to solve a mathematical problem, two general approaches can be considered: analytical solutions and numerical solutions. Analytical solution methods aim to obtain the solution of a given problem exactly and in closed form. Many classical mathematical problems can be solved using such methods, allowing the exact value of the solution to be determined.
+There are two basic approaches one may apply while trying to solve any mathematical problem: solving analytically or numerically. The process of solving analytically refers to calculating the exact solution of the given problem. It is possible to calculate the solution of many classical mathematical problems analytically and thus to derive the exact solution.
 
-However, for a significant portion of problems encountered in practice, analytical solutions either do not exist or are too costly to obtain. In particular, when dealing with nonlinear equations and systems of nonlinear equations, closed-form solutions are often not available. In such cases, numerical methods are employed.
+Nevertheless, there are many problems for which the analytical solution either does not exist at all or its calculation is excessively expensive. For instance, nonlinear and systems of nonlinear equations often cannot be solved analytically; thus, other methods have to be used.
 
-Rather than obtaining the exact solution directly, numerical methods aim to compute an approximate value of the solution with a certain level of accuracy. These methods typically rely on iterative algorithms that progressively improve the approximation step by step until the desired level of accuracy is achieved.
+Unlike the analytic approach, numeric methods allow deriving an approximate solution with a required precision. These methods utilize iterative algorithms that make it possible to gradually improve an approximation up until the required precision is obtained.
 
-Different numerical methods have their own advantages and disadvantages in terms of properties such as convergence rate, computational cost, and stability. Therefore, selecting an appropriate method for a given problem plays an important role in the study of numerical analysis \cite{burden, atkinson}.
+Different numerical methods have their own advantages and disadvantages. These advantages and disadvantages can be their convergence rates, computational costs and stability. So, selecting an appropriate method for a given problem has an important role. \cite{burden, atkinson}.
 
 \section{Nonlinear Equations and Systems}
 
@@ -72,12 +72,24 @@ In this context, the thesis focuses on two main problem classes. First, numerica
 
 Second, the study extends to systems of nonlinear equations of the form \( F(\mathbf{x}) = \mathbf{0} \). These systems are generally more complex and require more advanced techniques, particularly those involving the Jacobian matrix. Methods for solving such systems are analyzed within a similar theoretical framework.
 
-In addition to the theoretical analysis, the selected numerical methods are implemented using a computational tool. The implementations are used to evaluate the practical performance of the methods through numerical experiments. In particular, the methods are compared in terms of convergence behavior, computational efficiency, and robustness.
+In addition to the theoretical analysis, the selected numerical methods are implemented in Python using a consistent computational structure. The implementations are used to investigate the practical behavior of the methods through numerical experiments. In particular, the methods are compared in terms of convergence behavior, residual reduction, and robustness.
 
 Overall, the aim of this thesis is to provide a clear and structured examination of numerical methods for nonlinear problems, combining theoretical foundations with computational analysis.
 
 \section{Structure of the Thesis}
 
-This section will provide an overview of the structure of the thesis, briefly describing the content of each chapter.
+This thesis consists of seven main chapters.
 
-\textit{[This section will be completed after the thesis is finalized.]}
+Chapter 1 introduces the motivation behind numerical methods and discusses nonlinear equations and systems of nonlinear equations. The objectives and overall scope of the thesis are also presented in this chapter.
+
+Chapter 2 provides the mathematical background required for the numerical methods studied throughout the thesis. Fundamental concepts such as fixed-point formulation, convergence analysis, order of convergence, norms, Jacobian matrices, and stopping criteria are introduced.
+
+Chapter 3 focuses on numerical methods for solving single nonlinear equations. Classical methods including the bisection method, secant method, Newton's method, damped Newton method, and Brent's method are explained together with their convergence properties, illustrative examples, and failure cases.
+
+Chapter 4 extends the discussion to systems of nonlinear equations. Multivariable Newton's method and Broyden's method are examined theoretically and computationally. Illustrative examples and convergence comparisons are also included.
+
+Chapter 5 presents the implementation details of the numerical methods. The Python implementations, repository structure, testing process, and reproducibility considerations are discussed in this chapter.
+
+Chapter 6 focuses on numerical experiments and method comparisons. Benchmark problems, convergence plots, residual analyses, and experimental comparisons are presented for both single-variable equations and nonlinear systems.
+
+Finally, Chapter 7 investigates the relationship between nonlinear equation solving and optimization techniques. Residual minimization, Newton-type optimization methods, damping strategies, line-search techniques, and the Armijo condition are discussed from an optimization perspective. An adaptive damped Newton method based on Armijo backtracking is also examined numerically.

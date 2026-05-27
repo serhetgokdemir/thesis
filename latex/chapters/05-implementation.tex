@@ -1,0 +1,127 @@
+\chapter{Implementation}
+
+\section{Implementation Details}
+
+In order to examine numerical methods mentioned above from the point of view of their practical convergence properties and computation features, the corresponding algorithms have been implemented using the Python programming language. Two groups of implementations have been made: one for single nonlinear equations and another for systems of nonlinear equations. During the development of these algorithms, special attention was paid to the consistency, numerical stability, and clearness of the code.
+
+For single nonlinear equations, algorithms of bisection, secant, Newton, damped Newton, and Brent methods were implemented. For nonlinear systems, multivariable Newton and Broyden algorithms were implemented. Every algorithm is built using a unified pattern in order to make comparisons easier and create a unified experimental setting.
+
+Every solver function returns a dictionary which contains the following items: root value, convergence indicator, number of iterations performed, residual vector information, reason for termination of calculations, and iteration history. Using the unified output structure allows comparing the results of several algorithms easily and facilitates creation of comparison tables and graphs.
+
+Criteria of convergence were chosen to be the tolerance based and maximum iteration criteria. For each algorithm, there are certain convergence criteria depending on the method of calculation (residuals norm, intervals width, and size of steps). Information about iterations is stored during the algorithm execution in order to conduct deeper convergence analysis later.
+
+Tests for all functions have been written using the \texttt{pytest} module. There were such tests as verification of convergence, test with invalid initial parameters, singularity of Jacobians matrix, maximum iterations criterion, and verification of iteration history. These tests were effective in error finding.
+
+The numerical experiments and graphical comparisons were conducted using the Jupyter notebook environment and NumPy, Pandas, and Matplotlib modules.
+
+\section{Code Organization and Reproducibility}
+
+All the numerical methods introduced in this thesis have been programmed in Python, with code written in a consistent and reproducible manner. In order to increase clarity and consistency, different implementation files have been developed for each numerical method.
+
+The repository was organized into multiple components. A simplified version of the project structure is given below.
+
+\begin{verbatim}
+project/
+|-- src/
+|   |-- single_variable/
+|   |   |-- bisection.py
+|   |   |-- secant.py
+|   |   |-- newton.py
+|   |   |-- damped_newton.py
+|   |   `-- brent.py
+|   |
+|   |-- systems/
+|   |   |-- newton_system.py
+|   |   `-- broyden.py
+|   |
+|   `-- utils/
+|
+|-- notebooks/
+|   |-- single_variable_experiments.ipynb
+|   `-- system_experiments.ipynb
+|
+|-- tests/
+|-- figures/
+`-- requirements.txt
+\end{verbatim}
+
+The \texttt{src/} directory includes the implementations of the solvers that were applied throughout the work. Single-variable solvers and system solvers were separated into different modules in order to improve clarity and reusability.
+
+Numerical experiments, convergence plots, and iteration-history analyses were carried out using Jupyter notebooks stored in the \texttt{notebooks/} directory. Scientific Python libraries such as NumPy, Matplotlib, and Pandas were employed throughout the experiments.
+
+A uniform output format was followed for all solvers. Each implementation returns information such as approximate solution, convergence status, number of iterations, residual values, and iteration history. This unified structure simplified comparisons between different numerical methods and improved the consistency of the experimental results.
+
+Automatic testing mechanisms were also used during development in order to verify correctness and numerical consistency. These tests helped detect implementation errors and ensured agreement between theoretical formulations and computational results.
+
+The overall repository structure improved reproducibility. Since all experiments were generated using implemented solvers and Jupyter notebooks, the numerical results and visualizations included in this thesis can easily be reproduced and extended.
+
+\section{Test Problems}
+
+Several benchmark problems were selected in order to evaluate the convergence behavior, robustness, and computational efficiency of the implemented numerical methods. Separate test problems were used for single-variable equations and nonlinear systems.
+
+For single-variable experiments, the equation
+\[
+f(x)=\cos(x)-x
+\]
+was considered. This equation was selected because it is a nonlinear transcendental equation whose root cannot be expressed in a simple closed form. In addition, the problem allows the convergence characteristics of different iterative methods to be observed clearly.
+
+The derivative
+\[
+f'(x)=-\sin(x)-1
+\]
+was used for Newton-based methods.
+
+The initial values and intervals were selected according to the requirements and stability properties of the algorithms. For the bisection and Brent methods, the interval
+\[
+[0,1]
+\]
+was chosen because the function changes sign over this interval:
+\[
+f(0)=1>0,
+\qquad
+f(1)=\cos(1)-1<0.
+\]
+
+Therefore, the interval guarantees the existence of a root according to the Intermediate Value Theorem and provides a valid starting point for bracketing methods.
+
+For Newton's method and the damped Newton method, the initial approximation
+\[
+x_0=0.5
+\]
+was selected because it is reasonably close to the root and lies inside the bracketing interval.
+
+For the secant method, the initial approximations
+\[
+x_0=0,
+\qquad
+x_1=1
+\]
+were selected in order to provide two distinct starting points surrounding the root.
+
+For nonlinear system experiments, the following system was used:
+\[
+\begin{cases}
+x^2+y^2-5=0, \\
+e^x+y-1=0.
+\end{cases}
+\]
+
+This system was selected because it combines nonlinear algebraic and exponential terms while remaining sufficiently small for detailed analysis.
+
+The Jacobian matrix of the system is given by
+\[
+J_F(x,y)=
+\begin{bmatrix}
+2x & 2y \\
+e^x & 1
+\end{bmatrix}.
+\]
+
+The initial approximation for the nonlinear system experiments was chosen as
+\[
+\mathbf{x}_0=(1,-1).
+\]
+
+This initial point was selected because it is relatively close to the intersection region of the nonlinear equations and produces a nonsingular Jacobian matrix.
+
+The selected benchmark problems were intentionally moderate in size and complexity in order to focus primarily on convergence behavior, residual reduction, numerical stability, and method comparison.

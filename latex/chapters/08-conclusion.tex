@@ -1,0 +1,37 @@
+\chapter{Conclusion}
+
+\section{Summary of Findings}
+
+In this thesis, several numerical methods for solving nonlinear equations and systems of nonlinear equations were studied from both theoretical and computational perspectives.
+
+For single nonlinear equations, the bisection, secant, Newton, damped Newton, and Brent methods were examined. Their mathematical foundations, convergence behaviors, advantages, limitations, and possible failure cases were discussed in detail. In addition, illustrative examples were presented in order to demonstrate how the methods behave during the iterative process.
+
+For nonlinear systems, multivariable Newton and Broyden methods were investigated. The role of the Jacobian matrix, convergence properties of Newton-type methods, and quasi-Newton approximations were analyzed both theoretically and numerically.
+
+All methods considered in this thesis were implemented in Python using a consistent computational structure. Numerical experiments were performed in order to compare the methods in terms of convergence speed, residual reduction, robustness, and stability. The experiments showed that the theoretical convergence properties of the methods are clearly reflected in their computational behavior.
+
+The study also investigated the relationship between nonlinear equation solving and optimization. In particular, residual minimization, damping strategies, line-search techniques, and the Armijo condition were discussed from an optimization perspective. An adaptive damped Newton method based on Armijo backtracking was implemented and compared with the classical Newton method and the constant damped Newton method. The numerical results demonstrated that adaptive damping can improve stability and convergence behavior, especially for difficult initial approximations.
+
+Overall, the study showed that nonlinear equation solving is not only a theoretical mathematical topic but also an important component of scientific computing, optimization, and numerical simulation.
+
+\section{Limitations}
+
+The scope of this thesis was intentionally restricted to relatively small and medium-sized nonlinear problems. Large-scale sparse systems, high-dimensional optimization problems, and advanced large-scale numerical solvers were not considered in detail.
+
+In addition, the numerical experiments mainly focused on convergence behavior, residual reduction, and stability properties. Computational performance measures such as execution time, memory usage, and scalability were not investigated extensively.
+
+Another limitation is that only a selected group of classical and Newton-type methods was considered. More advanced techniques such as Levenberg--Marquardt methods, adaptive trust-region algorithms, and higher-order quasi-Newton approaches were outside the scope of this study.
+
+Finally, the implementations were developed primarily for educational and experimental purposes. Although the algorithms were tested carefully, the software was not designed as a fully optimized numerical library.
+
+\section{Future Work}
+
+Several possible extensions of this work may be considered in future studies.
+
+One possible direction is the investigation of large-scale nonlinear systems arising in scientific computing, engineering, and applied mathematics. In such problems, sparse matrix techniques, iterative linear algebra solvers, and efficient Jacobian approximations become increasingly important.
+
+Another possible extension is the study of more advanced optimization-based nonlinear solvers. In particular, adaptive line-search strategies, trust-region methods, and modern quasi-Newton techniques may provide improved robustness and efficiency.
+
+The implementations developed in this thesis may also be extended into a more comprehensive numerical software package containing visualization tools, benchmarking utilities, automated testing systems, and interactive experiment environments.
+
+Finally, the relationship between nonlinear equation solving, optimization, and machine learning presents another interesting research direction. Many modern machine learning algorithms rely heavily on optimization techniques, and Newton-type approaches continue to play an important role in large-scale computational problems.

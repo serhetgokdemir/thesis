@@ -1,0 +1,111 @@
+\chapter{Numerical Experiments}
+
+The implemented methods were tested on the selected benchmark problems in order to compare their convergence behavior and computational characteristics. The experiments focused primarily on iteration counts, residual reduction, and stability of the numerical methods.
+
+\section{Single-Variable Experiments}
+
+For the scalar nonlinear equation
+\[
+f(x)=\cos(x)-x,
+\]
+all single-variable methods successfully converged to the same root when appropriate initial values were selected. However, the convergence speeds of the methods differed significantly.
+
+Figure~\ref{fig:single_variable_convergence} presents the residual reduction behavior of the implemented methods during the iterative process.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/single_variable_convergence.png}
+\caption{Convergence comparison of single-variable methods}
+\label{fig:single_variable_convergence}
+\end{figure}
+
+The Newton method converged rapidly and achieved very small residual values within only a few iterations. This behavior is consistent with the quadratic convergence properties discussed in previous chapters.
+
+The secant method also demonstrated fast convergence while avoiding explicit derivative evaluations. Although its convergence was slightly slower than Newton's method, the method remained computationally efficient.
+
+The damped Newton method produced convergence behavior similar to the standard Newton method in this experiment because the selected initial approximation was already sufficiently close to the root.
+
+The bisection method converged more slowly than the other approaches due to its linear convergence behavior. Nevertheless, the method consistently reduced the bracketing interval and remained highly robust throughout the experiment.
+
+Brent's method demonstrated balanced behavior by combining the robustness of bracketing methods with interpolation-based acceleration techniques.
+
+Table~\ref{tab:single_variable_results} summarizes the numerical results obtained for the implemented single-variable methods.
+
+\begin{table}[h!]
+\centering
+\caption{Comparison of single-variable methods}
+\label{tab:single_variable_results}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Method & Iterations & Final Residual & Converged \\ \hline
+Bisection & 24 & \(7.75 \times 10^{-9}\) & Yes \\ \hline
+Secant & 5 & \(2.67 \times 10^{-13}\) & Yes \\ \hline
+Newton & 3 & \(1.18 \times 10^{-9}\) & Yes \\ \hline
+Damped Newton & 11 & \(5.75 \times 10^{-9}\) & Yes \\ \hline
+Brent & 5 & \(6.11 \times 10^{-9}\) & Yes \\ \hline
+\end{tabular}
+\end{table}
+
+\section{System Experiments}
+
+In addition to single-variable experiments, nonlinear system solvers were tested on a benchmark problem involving coupled nonlinear equations. The experiments focused on comparing the convergence behavior of the multivariable Newton method and Broyden's method.
+
+The following nonlinear system was used:
+\[
+\begin{cases}
+x^2+y^2-5=0, \\
+e^x+y-1=0.
+\end{cases}
+\]
+
+The initial approximation was selected as
+\[
+\mathbf{x}_0=(1,-1).
+\]
+
+Both methods successfully converged to the same solution. However, their convergence characteristics differed due to the use of exact and approximate Jacobian information.
+
+Figure~\ref{fig:system_methods_convergence} presents the residual norm reduction during the iterative process.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/system_methods_convergence.png}
+\caption{Convergence comparison of system methods}
+\label{fig:system_methods_convergence}
+\end{figure}
+
+The multivariable Newton method converged more rapidly and achieved smaller residual values within fewer iterations. This behavior is consistent with the quadratic convergence properties of Newton-based methods when accurate Jacobian information is available.
+
+Broyden's method required more iterations because the Jacobian matrix was approximated iteratively instead of being computed exactly at every step. Nevertheless, the method still demonstrated stable convergence behavior and reduced the computational burden associated with repeated Jacobian evaluations.
+
+Table~\ref{tab:system_results} summarizes the numerical results obtained for the nonlinear system experiments.
+
+\begin{table}[h!]
+\centering
+\caption{Comparison of system methods}
+\label{tab:system_results}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Method & Iterations & Final Residual & Converged \\ \hline
+Newton System & 5 & \(2.22 \times 10^{-16}\) & Yes \\ \hline
+Broyden & 7 & \(5.35 \times 10^{-10}\) & Yes \\ \hline
+\end{tabular}
+\end{table}
+
+The experimental results show that the theoretical characteristics of the methods are reflected in their computational behavior. Newton-type methods converge rapidly when derivative information is available, while derivative-free or approximate-Jacobian approaches require more iterations but may offer practical advantages in terms of implementation cost.
+
+\section{Discussion}
+
+From the conducted numerical experiments, it can be observed that different numerical methods possess different advantages and limitations depending on the structure of the problem and the available information.
+
+Newton's method demonstrated the fastest convergence when suitable initial approximations were used. Due to its quadratic convergence behavior, the residual decreased very rapidly within only a few iterations. However, the method requires derivative information and may become unstable for poor initial guesses.
+
+The secant method provided relatively fast convergence without requiring explicit derivative evaluations. Although its convergence was slightly slower than Newton's method, it remained computationally efficient and easier to apply in derivative-free settings.
+
+The damped Newton method improved stability by controlling the iteration step size. While this stabilization may reduce convergence speed, it often produces a more reliable iterative process.
+
+The bisection method was the most robust among the considered approaches. Although its convergence was significantly slower, the method consistently reduced the bracketing interval and guaranteed convergence under suitable assumptions.
+
+Brent's method combined the robustness of bracketing methods with the acceleration provided by interpolation techniques. As a result, it achieved both stable and efficient convergence behavior.
+
+For nonlinear systems, the multivariable Newton method converged rapidly due to the use of exact Jacobian information. In contrast, Broyden's method required more iterations but avoided repeated Jacobian evaluations, which may become advantageous in larger or computationally expensive problems.

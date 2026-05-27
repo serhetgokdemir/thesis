@@ -1,0 +1,94 @@
+\documentclass[12pt]{report}
+
+% Page layout
+\usepackage[a4paper, margin=1in]{geometry}
+
+% Mathematics
+\usepackage{amsmath, amssymb}
+
+% Encoding
+\usepackage[utf8]{inputenc}
+
+% Figures and tables
+\usepackage{graphicx}
+\usepackage{float}
+
+% Formatting
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{tocbibind}
+
+% URLs and colors
+\usepackage{url}
+\usepackage{xcolor}
+
+% Code listings
+\usepackage{listings}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\bfseries,
+    commentstyle=\itshape,
+    stringstyle=\ttfamily,
+    showstringspaces=false,
+    breaklines=true,
+    breakatwhitespace=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    tabsize=4,
+    captionpos=b
+}
+
+% Chapter title format
+\titleformat{\chapter}[hang]
+  {\normalfont\huge\bfseries}
+  {\thechapter.}
+  {1em}
+  {}
+
+% Thesis title information
+\title{Numerical Methods for Solving Nonlinear Equations and Systems of Nonlinear Equations}
+\author{
+Serhet G\"okdemir \\
+21058024 \\[1em]
+Advisor: Prof. Dr. Hale Gonce K\"o\c{c}ken
+}
+\date{Istanbul, 2026}
+
+\begin{document}
+
+\maketitle
+
+\clearpage
+\pagenumbering{roman}
+
+% Front matter
+\input{frontmatter/copyright}
+\input{frontmatter/abstract}
+\input{frontmatter/preface}
+\input{frontmatter/symbols}
+\input{frontmatter/abbreviations}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\clearpage
+\pagenumbering{arabic}
+
+% Chapters
+\input{chapters/01-introduction}
+\input{chapters/02-mathematical_background}
+\input{chapters/03-single_nonlinear_equations}
+\input{chapters/04-systems_of_nonlinear_equations}
+\input{chapters/05-implementation}
+\input{chapters/06-numerical_experiments}
+\input{chapters/07-optimization_connection}
+\input{chapters/08-conclusion}
+
+\bibliographystyle{apalike}
+\bibliography{bibliography/references}
+
+\end{document}
