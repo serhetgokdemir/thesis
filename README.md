@@ -1,6 +1,6 @@
 # Bachelor's Thesis Project in Mathematical Engineering
 
-This repository contains the implementations and required documentation for a numerical root-finding methods project, developed as part of a Bachelor's thesis in the Department of Mathematical Engineering at Yildiz Technical University. The primary goal is to produce clean, testable, and mathematically sound code that adheres to academic standards.
+This repository contains the implementations and required documentation for a numerical root-finding methods project. It's developed as part of a Bachelor's thesis in the Department of Mathematical Engineering at Yildiz Technical University.
 
 Developed by Serhet Gökdemir under the supervision of Hale Gonce Köçken.
 
@@ -62,22 +62,6 @@ thesis-nonlinear-equations/
 ├── checkpoints/  # Contains historical progress PDFs (e.g., 03.17.2026.pdf)
 └── forbidden/    # Personal or non-repository files (ignored by .gitignore)
 ```
-
-## Implemented Methods
-
-The project includes the following numerical methods for finding roots of nonlinear equations:
-
-### Single-Variable Equations
-- **Bisection Method**: A simple bracketing method.
-- **Secant Method**: An open method that uses a succession of roots of secant lines.
-- **Newton's Method**: An open method that uses tangent lines.
-- **Damped Newton's Method**: A variation of Newton's method with a fixed damping factor.
-- **Adaptive Damped Newton's Method**: An extension of Newton's method where the damping factor is chosen adaptively using the Armijo rule to ensure convergence.
-- **Brent's Method**: A hybrid root-finding algorithm combining the bisection method, the secant method, and inverse quadratic interpolation.
-
-### Systems of Nonlinear Equations
-- **Newton's Method for Systems**: An extension of Newton's method for multi-dimensional problems.
-- **Broyden's Method**: A quasi-Newton method for finding roots in multiple dimensions.
 
 ## Installation and Usage
 
