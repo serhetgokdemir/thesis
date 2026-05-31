@@ -49,6 +49,8 @@ def brent(
                 "fb": fb,
                 "fc": fc,
                 "interval_width": abs(c - b),
+                "error": abs(c - b) / 2.0,
+                "residual": abs(fb),
             }
         )
 

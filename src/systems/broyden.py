@@ -77,6 +77,7 @@ def broyden(
                 "norm_f": norm_Fx,
                 "step_norm": step_norm,
                 "error": step_norm,
+                "residual": norm_Fx,
             }
         )
 

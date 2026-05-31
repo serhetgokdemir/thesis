@@ -45,7 +45,7 @@ def test_damped_newton_no_convergence():
 def test_damped_newton_history_keys():
     result = damped_newton(f1, df1, 1.5)
     history_item = result["history"][0]
-    expected_keys = {"iteration", "x", "fx", "dfx", "step", "alpha", "error"}
+    expected_keys = {"iteration", "x", "fx", "dfx", "step", "alpha", "error", "residual"}
     assert expected_keys == set(history_item.keys())
     assert isinstance(history_item["x"], (int, float))
     assert isinstance(history_item["fx"], (int, float))

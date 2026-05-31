@@ -65,7 +65,8 @@ def newton_system(
             "x": x.tolist(),
             "norm_f": norm_Fx,
             "step_norm": step_norm,
-            "error": step_norm
+            "error": step_norm,
+            "residual": float(norm_Fx),
         })
 
         F_next = F(x_next)

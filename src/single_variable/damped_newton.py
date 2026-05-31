@@ -47,7 +47,8 @@ def damped_newton(
             "dfx": dfx,
             "step": step,
             "alpha": alpha,
-            "error": error
+            "error": error,
+            "residual": abs(fx),
         })
 
         residual_next = abs(f(x_next))

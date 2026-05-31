@@ -51,7 +51,8 @@ def secant(
             "f_prev": f0,
             "f_curr": f1,
             "x_next": x_next,
-            "error": error
+            "error": error,
+            "residual": float(abs(f1)),
         })
 
         f_next = f(x_next)

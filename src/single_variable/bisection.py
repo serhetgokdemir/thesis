@@ -43,7 +43,9 @@ def bisection(
             "fa": fa,
             "fb": fb,
             "fc": fc,
-            "interval_width": interval_width
+            "interval_width": interval_width,
+            "error": interval_width / 2,
+            "residual": abs(fc),
         })
 
         if abs(fc) <= tol:

@@ -53,7 +53,8 @@ def newton(
             "dfx": dfx,
             "step": step,
             "alpha": 1.0,
-            "error": error
+            "error": error,
+            "residual": abs(fx),
         })
         
         if error <= tol:

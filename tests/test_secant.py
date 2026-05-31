@@ -55,7 +55,7 @@ def test_secant_max_iter():
 def test_secant_history_keys():
     result = secant(f1, 1, 2)
     history_item = result["history"][0]
-    expected_keys = {"iteration", "x_prev", "x_curr", "f_prev", "f_curr", "x_next", "error"}
+    expected_keys = {"iteration", "x_prev", "x_curr", "f_prev", "f_curr", "x_next", "error", "residual"}
     assert expected_keys == set(history_item.keys())
     assert isinstance(history_item["x_prev"], (int, float))
     assert isinstance(history_item["x_curr"], (int, float))

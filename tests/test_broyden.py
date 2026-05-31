@@ -70,7 +70,7 @@ def test_broyden_history_keys():
     x0 = np.array([2.0, 1.0])
     result = broyden(F1, x0)
     history_item = result["history"][0]
-    expected_keys = {"iteration", "x", "norm_f", "step_norm", "error"}
+    expected_keys = {"iteration", "x", "norm_f", "step_norm", "error", "residual"}
     assert expected_keys == set(history_item.keys())
 
     # x içeriği liste olmalı (tolist sonucu)

@@ -36,7 +36,7 @@ def test_bisection_max_iter():
 def test_bisection_history_keys():
     result = bisection(f1, 1, 2)
     history_item = result["history"][0]
-    expected_keys = {"iteration", "a", "b", "c", "fa", "fb", "fc", "interval_width"}
+    expected_keys = {"iteration", "a", "b", "c", "fa", "fb", "fc", "interval_width", "error", "residual"}
     assert expected_keys == set(history_item.keys())
     # skaler tip kontrolleri
     assert isinstance(history_item["a"], (int, float))

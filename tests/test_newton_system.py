@@ -73,7 +73,7 @@ def test_newton_system_history_keys():
     x0 = np.array([2.0, 1.0])
     result = newton_system(F1, J1, x0)
     history_item = result["history"][0]
-    expected_keys = {"iteration", "x", "norm_f", "step_norm", "error"}
+    expected_keys = {"iteration", "x", "norm_f", "step_norm", "error", "residual"}
     assert expected_keys == set(history_item.keys())
     # x içeriği list tipinde olmalı (tolist sonucu)
     assert isinstance(history_item["x"], list)
