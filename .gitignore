@@ -80,5 +80,7 @@ forbidden/
 *.snm
 *.vrb
 
-# Ignore auto-compiled pdf
+# Ignore auto-compiled pdf and intermediate files
 latex/main.pdf
+/scripts
+latex/flattened.tex
