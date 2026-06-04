@@ -79,3 +79,6 @@ forbidden/
 *.nav
 *.snm
 *.vrb
+
+# Ignore auto-compiled pdf
+latex/main.pdf
