@@ -1,10 +1,19 @@
-\documentclass[12pt]{report}
+\documentclass[12pt,fleqn]{report}
 
-% Page layout
-\usepackage[a4paper, margin=1in]{geometry}
+% Page layout (Yönergeye göre)
+\usepackage[a4paper,left=3.5cm,right=2.5cm,top=3cm,bottom=3cm]{geometry}
+
+% Font (Times-like) and math font
+% Prevent \Bbbk redefinition conflicts with amsfonts
+\let\Bbbk\relax
+\usepackage{newtxtext,newtxmath}
 
 % Mathematics
+% Prevent \Bbbk redefinition if newtx already defined it
+\let\Bbbk\relax
 \usepackage{amsmath, amssymb}
+\setlength{\mathindent}{0pt}
+\numberwithin{equation}{chapter}
 
 % Encoding
 \usepackage[utf8]{inputenc}
@@ -12,6 +21,7 @@
 % Figures and tables
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage[labelfont=bf]{caption}
 \graphicspath{{./}{latex/}}
 
 \makeatletter
@@ -20,12 +30,16 @@
 
 % Formatting
 \usepackage{setspace}
+\singlespacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5\baselineskip}
 \usepackage{titlesec}
 \usepackage{tocbibind}
 
 % URLs and colors
 \usepackage{url}
 \usepackage{xcolor}
+\usepackage[numbers,sort&compress]{natbib}
 
 % Code listings
 \usepackage{listings}
@@ -104,6 +118,7 @@ Advisor: Prof. Dr. Hale Gonce K\"o\c{c}ken
 
 \clearpage
 \pagenumbering{roman}
+\setcounter{page}{2}
 
 % Front matter
 \input{frontmatter/copyright}
@@ -112,8 +127,11 @@ Advisor: Prof. Dr. Hale Gonce K\"o\c{c}ken
 \input{frontmatter/symbols}
 \input{frontmatter/abbreviations}
 
+\cleardoublepage
 \tableofcontents
+\cleardoublepage
 \listoffigures
+\cleardoublepage
 \listoftables
 
 \clearpage
@@ -129,7 +147,8 @@ Advisor: Prof. Dr. Hale Gonce K\"o\c{c}ken
 \input{chapters/07-optimization_connection}
 \input{chapters/08-conclusion}
 
-\bibliographystyle{apalike}
+% Use numeric, appearance-order bibliography as required by the guidelines
+\bibliographystyle{unsrtnat}
 \bibliography{bibliography/references}
 
 \end{document}
