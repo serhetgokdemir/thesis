@@ -9,20 +9,20 @@ Developed by Serhet Gökdemir under the supervision of Hale Gonce Köçken.
 The project is organized around a hierarchy that includes the LaTeX source for the thesis, Python implementations of numerical methods, and experiment/result files. The structure is as follows:
 
 ```
-thesis-nonlinear-equations/
+thesis/
 │
 ├── README.md
 ├── requirements.txt
 ├── pytest.ini
 │
-├── thesis/
+├── latex/
 │   ├── main.tex
-│   ├── chapters/
-│   ├── frontmatter/
-│   ├── figures/
-│   ├── tables/
+│   ├── additionals/
 │   ├── bibliography/
-│   └── output/
+│   ├── chapters/
+│   ├── figures/
+│   ├── frontmatter/
+│   └──tables/
 │
 ├── src/
 │   ├── single_variable/
