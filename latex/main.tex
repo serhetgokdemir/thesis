@@ -119,19 +119,23 @@ Advisor: Prof. Dr. Hale Gonce K\"o\c{c}ken
 \pagenumbering{roman}
 \setcounter{page}{2}
 
-% Front matter
+% Front matter (ordered for ToC: symbols, abbreviations, lists, preface, abstracts)
 \input{frontmatter/copyright}
-\input{frontmatter/abstract}
-\input{frontmatter/preface}
-\input{frontmatter/symbols}
-\input{frontmatter/abbreviations}
-
 \cleardoublepage
-\tableofcontents
+\input{frontmatter/symbols}
+\cleardoublepage
+\input{frontmatter/abbreviations}
 \cleardoublepage
 \listoffigures
 \cleardoublepage
 \listoftables
+\cleardoublepage
+\input{frontmatter/preface}
+\cleardoublepage
+\input{frontmatter/abstract}
+
+\cleardoublepage
+\tableofcontents
 
 \clearpage
 \pagenumbering{arabic}
