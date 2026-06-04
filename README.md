@@ -54,10 +54,7 @@ thesis-nonlinear-equations/
 ├── experiments/
 │   ├── single_variables_experiment.ipynb
 │   ├── systems_experiments.ipynb
-│   ├── armijo_experiments.ipynb
-│   └── outputs/
-│       ├── figures/
-│       └── tables/
+│   └── armijo_experiments.ipynb
 │
 ├── checkpoints/  # Contains historical progress PDFs (e.g., 03.17.2026.pdf)
 └── forbidden/    # Personal or non-repository files (ignored by .gitignore)
