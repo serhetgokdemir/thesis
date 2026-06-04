@@ -236,7 +236,7 @@ Line-search techniques and Armijo-type conditions are widely used in optimizatio
 
 The following implementation fragment shows the main computational structure of the adaptive damped Newton method. The step size is first set to one, and then it is reduced by backtracking until the Armijo condition is satisfied.
 
-\begin{lstlisting}[caption={Python implementation of the adaptive damped Newton method}, label={lst:adaptive_damped_newton}]
+\begin{lstlisting}
 def adaptive_damped_newton(
     f, df, x0,
     tol=1e-8,

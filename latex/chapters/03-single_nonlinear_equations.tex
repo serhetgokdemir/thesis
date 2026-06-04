@@ -41,7 +41,7 @@ This linear convergence makes the method less efficient compared to methods such
 
 The following Python function presents a simplified implementation of the bisection algorithm used throughout the numerical experiments.
 
-\begin{lstlisting}[caption={Python implementation of the bisection method}, label={lst:bisection}]
+\begin{lstlisting}
 def bisection(f, a, b, tol=1e-8, max_iter=100):
 
     fa = f(a)
@@ -106,7 +106,7 @@ One limitation of the secant method is that it requires two initial values and m
 
 The following Python function shows the main computational structure of the secant method. The implementation keeps the two most recent approximations, computes the next iterate using the secant formula, and stops when either the residual or the step size becomes sufficiently small.
 
-\begin{lstlisting}[caption={Python implementation of the secant method}, label={lst:secant}]
+\begin{lstlisting}
 def secant(f, x0, x1, tol=1e-8, max_iter=100):
 
     f0 = f(x0)
@@ -164,7 +164,7 @@ Another limitation arises when the derivative is close to zero, which can lead t
 
 The following Python function presents the main implementation structure of Newton's method. The derivative is evaluated at each iteration, and a safeguard is included in order to avoid division by a very small derivative.
 
-\begin{lstlisting}[caption={Python implementation of Newton's method}, label={lst:newton}]
+\begin{lstlisting}
 def newton(f, df, x0, tol=1e-8, max_iter=100):
 
     x = x0
@@ -229,7 +229,7 @@ The damped Newton method provides a useful balance between efficiency and stabil
 
 The following implementation demonstrates the main structure of the damped Newton method with a fixed damping parameter. The parameter \(\alpha\) controls the size of the Newton step.
 
-\begin{lstlisting}[caption={Python implementation of the damped Newton method}, label={lst:damped_newton}]
+\begin{lstlisting}
 def damped_newton(
     f, df, x0,
     tol=1e-8,
@@ -363,7 +363,7 @@ Even though the full implementation of the Brent method is relatively more compl
 
 The following simplified implementation fragment illustrates the hybrid structure of Brent's method. The algorithm dynamically switches between interpolation and bisection steps in order to balance convergence speed and numerical stability.
 
-\begin{lstlisting}[caption={Core iteration structure of Brent's method}, label={lst:brent}]
+\begin{lstlisting}
 for i in range(max_iter):
 
     if abs(e) > tol and abs(fa) > abs(fb):
