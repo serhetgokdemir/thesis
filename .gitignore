@@ -84,3 +84,4 @@ forbidden/
 latex/main.pdf
 /scripts
 latex/flattened.tex
+latex/compiled/flattened.pdf
