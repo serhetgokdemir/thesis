@@ -22,7 +22,7 @@ thesis/
 │   ├── chapters/
 │   ├── figures/
 │   ├── frontmatter/
-│   └──tables/
+│   └── tables/
 │
 ├── src/
 │   ├── single_variable/
