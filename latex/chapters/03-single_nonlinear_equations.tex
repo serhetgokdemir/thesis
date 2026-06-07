@@ -1214,13 +1214,13 @@ so there is no sign change. Since Brent's method relies on bracketing, it cannot
 
 \section{Comparison of Methods}
 
-Numerical methods that can be used to solve single nonlinear equations have been described in Section II. In this part, a comparison of their properties is done.
+The numerical methods for solving single nonlinear equations have been described in the previous sections of this chapter. In this part, a comparison of their properties is done.
 
 The bisection method stands out because it is the most robust method. Convergence is guaranteed if the initial interval meets the sign condition and the equation is continuous within it. However, its convergence rate is rather low, namely, linear. Hence, the process takes much time \cite{burden, atkinson}.
 
-The secant method is more efficient than the former one because the latter does not need any derivations to be performed and the former guarantees quadratic convergence. The secant method has a faster rate than the bisection method: its rate is superlinear. At the same time, convergence is not guaranteed \cite{kelley}.
+The secant method is generally more efficient than the bisection method because it uses interpolation information and does not require derivative evaluations. Its convergence is superlinear, with order approximately \(p \approx 1.618\). However, unlike the bisection method, convergence is not guaranteed \cite{kelley}.
 
-The fastest algorithm in the list above is the Newton method. This algorithm has a quadratic convergence rate as long as the initial value is close enough to the solution, and the first-order derivation is positive. This property makes it a very fast method of solving equations. Yet, it can diverge depending on the initial value \cite{burden, kelley}.
+The fastest algorithm in the list above is the Newton method. Newton's method has quadratic convergence when the initial approximation is sufficiently close to the root and \(f'(x^*) \neq 0\). This property makes it a very fast method of solving equations. Yet, it can diverge depending on the initial value \cite{burden, kelley}.
 
 The damped Newton method differs from the former one only in that it introduces an additional parameter – step size. This modification prevents the method from diverging. The method becomes more robust as it starts converging from a bigger set of values. As far as the convergence rate is concerned, it is reduced because of the new parameter \cite{kelley, nocedal}.
 
