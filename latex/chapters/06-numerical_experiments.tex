@@ -19,15 +19,15 @@ Figure~\ref{fig:single_variable_convergence} presents the residual reduction beh
 \label{fig:single_variable_convergence}
 \end{figure}
 
-The Newton method converged rapidly and achieved very small residual values within only a few iterations. This behavior is consistent with the quadratic convergence properties discussed in previous chapters.
+In this experiment, Newton’s method reached the root in only a small number of iterations and produced very small residual values. This is not surprising, since the method is expected to show quadratic convergence when the starting point is close enough to the root.
 
-The secant method also demonstrated fast convergence while avoiding explicit derivative evaluations. Although its convergence was slightly slower than Newton's method, the method remained computationally efficient.
+The secant method also performed well. It converged quickly and had the advantage of not requiring an explicit derivative calculation. Its convergence was a little slower than Newton’s method, but the method was still efficient in terms of computation.
 
-The damped Newton method produced convergence behavior similar to the standard Newton method in this experiment because the selected initial approximation was already sufficiently close to the root.
+The damped Newton method gave results close to those of the standard Newton method. In this example, the initial approximation was already near the root, so the damping mechanism did not change the behavior of the method very strongly.
 
-The bisection method converged more slowly than the other approaches due to its linear convergence behavior. Nevertheless, the method consistently reduced the bracketing interval and remained highly robust throughout the experiment.
+The bisection method required more iterations than the other methods. This is expected because it has linear convergence. However, it steadily narrowed the bracketing interval at each step, which made its behavior stable and reliable during the experiment.
 
-Brent's method demonstrated balanced behavior by combining the robustness of bracketing methods with interpolation-based acceleration techniques.
+Brent’s method gave one of the most balanced results. It preserved the reliability of a bracketing method, while using interpolation steps to improve the speed of convergence.
 
 Table~\ref{tab:single_variable_results} summarizes the numerical results obtained for the implemented single-variable methods.
 
