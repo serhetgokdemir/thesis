@@ -1112,11 +1112,11 @@ Iteration & Approximation & \(f(x_k)\) \\ \hline
 \end{tabular}
 \end{table}
 
-Brent's method converges rapidly while still maintaining a valid bracketing interval throughout the computation. This combination of robustness and efficiency is one of the main reasons why the method is widely used in practical numerical software libraries.
+Brent’s method usually moves toward the root quite fast, but it still keeps the root bracketed at each step of the computation. This is useful in practice because the method does not rely only on speed it also keeps the safety provided by bracketing methods. For this reason, Brent’s method is a common choice in many numerical software libraries.
 
 \subsection{Comparison for the Example}
 
-The numerical results obtained above show clear differences among the methods. Bisection is the slowest method, but it behaves in a very predictable way. Secant converges faster and avoids derivative evaluation. Newton's method gives the fastest convergence in this example, while damped Newton sacrifices some speed in exchange for additional stability. Brent's method combines reliability and efficiency in a balanced manner.
+The numerical results above show that the methods behave quite differently. Bisection is the slowest method in this example, but its progress is regular and easy to follow. The secant method reaches the solution faster and does not require any derivative information. Newton’s method gives the fastest convergence here. The damped Newton method is slower than the standard Newton method, but this loss of speed comes with better stability. Brent’s method gives a balanced result, since it remains reliable while still converging efficiently.
 
 \begin{table}[h!]
 \centering
