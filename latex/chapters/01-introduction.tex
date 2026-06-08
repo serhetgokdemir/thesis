@@ -26,7 +26,7 @@ f(x) = x^3 - x - 2 = 0
 
 for which no closed-form analytical solution exists in a simple form. Such equations commonly arise in various scientific and engineering applications, including physics, optimization, and computational modeling.
 
-In many practical cases, it is not possible to determine the exact solution of a nonlinear equation analytically. Even when an analytical solution exists, it may be too complicated or computationally expensive to evaluate. For this reason, numerical methods are employed to approximate the roots of nonlinear equations with a desired level of accuracy.
+However, in practice, there exist cases where obtaining an exact analytical solution for a nonlinear equation is not feasible. If at all an analytical solution is obtainable, it might prove to be extremely complex to compute. This is why numerical solutions are sought after in order to obtain the roots of the nonlinear equation.
 
 The problem can be extended to systems of nonlinear equations. 
 A nonlinear system can be written in vector form as
@@ -49,7 +49,7 @@ x - y - 1 = 0.
 
 \noindent Such systems arise naturally in applications where multiple variables interact in a nonlinear manner.
 
-Solving nonlinear systems is generally more complex than solving single nonlinear equations. In particular, the solution methods often require the use of the Jacobian matrix, defined as
+Solving a nonlinear system is usually more complex than solving a single nonlinear equation. Moreover, solution methods often require use of Jacobian matrix. It is defined as
 
 \begin{equation}
 J_F(\mathbf{x}) =
@@ -62,15 +62,15 @@ J_F(\mathbf{x}) =
 \end{equation}
 
 which generalizes the concept of the derivative to higher dimensions \cite{kelley}.
-In this thesis, both single nonlinear equations and systems of nonlinear equations are considered. The focus is on numerical methods that iteratively approximate the solution and their behavior in terms of convergence, computational cost, and robustness.
+In this thesis, both one-dimensional and multidimensional nonlinear equations will be studied. It will be particularly focused on the iterative techniques used to solve these equations numerically, taking into consideration issues such as convergence and cost.
 
 \section{Objectives of the Thesis}
 
-The main objective of this thesis is to study numerical methods for solving nonlinear equations and systems of nonlinear equations. These problems arise frequently in various fields of science and engineering, and in many cases, their exact solutions cannot be obtained analytically. As a result, numerical approaches play a fundamental role in approximating their solutions \cite{burden, atkinson}.
+The primary aim of this dissertation is the analysis of numerical methods used in finding solutions of nonlinear equations and nonlinear equation systems. This kind of problem often occurs in different branches of science and technology; in many cases, there are no analytical solutions to such problems. For this reason, numerical methods take the lead in solving them. \cite{burden, atkinson}.
 
-In this context, the thesis focuses on two main problem classes. First, numerical methods for solving single nonlinear equations of the form \( f(x) = 0 \) are investigated. Classical methods such as bisection, secant, and Newton-type methods are examined in terms of their underlying principles and convergence behavior.
+In this context, the thesis focuses on two main classes of problems. The first involves numerical methods for solving single nonlinear equations of the form \( f(x) = 0 \). Classical approaches, including the bisection, secant, and Newton-type methods, are examined with emphasis on their basic principles and convergence characteristics.
 
-Second, the study extends to systems of nonlinear equations of the form \( F(\mathbf{x}) = \mathbf{0} \). These systems are generally more complex and require more advanced techniques, particularly those involving the Jacobian matrix. Methods for solving such systems are analyzed within a similar theoretical framework.
+The second part of the study considers systems of nonlinear equations of the form \( F(\mathbf{x}) = \mathbf{0} \). Compared with single equations, these systems are generally more complex and often require more advanced solution techniques, especially those based on the Jacobian matrix. The methods used to solve such systems are investigated within a similar theoretical framework.
 
 In addition to the theoretical analysis, the selected numerical methods are implemented in Python using a consistent computational structure. The implementations are used to investigate the practical behavior of the methods through numerical experiments. In particular, the methods are compared in terms of convergence behavior, residual reduction, and robustness.
 
@@ -78,20 +78,20 @@ Overall, the aim of this thesis is to provide a clear and structured examination
 
 \section{Structure of the Thesis}
 
-This thesis consists of eight main chapters.
+This thesis is divided into eight chapters.
 
-Chapter 1 introduces the motivation behind numerical methods and discusses nonlinear equations and systems of nonlinear equations. The objectives and overall scope of the thesis are also presented in this chapter.
+Chapter 1 explains the motivation for studying numerical methods and introduces the concepts of nonlinear equations and systems of nonlinear equations. The aims of the thesis and the topics covered throughout the study are also outlined.
 
-Chapter 2 provides the mathematical background required for the numerical methods studied throughout the thesis. Fundamental concepts such as fixed-point formulation, convergence analysis, order of convergence, norms, Jacobian matrices, and stopping criteria are introduced.
+Chapter 2 provides the mathematical background needed for the methods discussed in the following chapters. Concepts such as fixed-point formulations, convergence analysis, orders of convergence, norms, Jacobian matrices, and stopping criteria are presented as the foundation for the later discussions.
 
-Chapter 3 focuses on numerical methods for solving single nonlinear equations. Classical methods including the bisection method, secant method, Newton's method, damped Newton method, and Brent's method are explained together with their convergence properties, illustrative examples, and failure cases.
+Chapter 3 deals with numerical methods for solving single nonlinear equations. Well-known methods, including the bisection method, secant method, Newton’s method, damped Newton method, and Brent’s method, are introduced and discussed in terms of their convergence behavior. The chapter also includes illustrative examples and examples of situations in which these methods may fail.
 
-Chapter 4 extends the discussion to systems of nonlinear equations. Multivariable Newton's method and Broyden's method are examined theoretically and computationally. Illustrative examples and convergence comparisons are also included.
+Chapter 4 turns to systems of nonlinear equations. Multivariable Newton’s method and Broyden’s method are examined from both theoretical and computational perspectives. Several examples are provided to illustrate their application and to compare their convergence performance.
 
-Chapter 5 presents the implementation details of the numerical methods. The Python implementations, repository structure, testing process, and reproducibility considerations are discussed in this chapter.
+Chapter 5 focuses on the practical implementation of the numerical methods considered in the thesis. The structure of the repository, the Python implementations, the testing procedures, and issues related to reproducibility are discussed.
 
-Chapter 6 focuses on numerical experiments and method comparisons. Benchmark problems, convergence plots, residual analyses, and experimental comparisons are presented for both single-variable equations and nonlinear systems.
+Chapter 6 presents the numerical experiments and comparative analyses carried out in this study. Benchmark problems, convergence plots, residual analyses, and experimental results are reported for both single-variable equations and systems of nonlinear equations, allowing the performance of the methods to be evaluated under different conditions.
 
-Chapter 7 investigates the relationship between nonlinear equation solving and optimization techniques. Residual minimization, Newton-type optimization methods, damping strategies, line-search techniques, and the Armijo condition are discussed from an optimization perspective. An adaptive damped Newton method based on Armijo backtracking is also examined numerically.
+Chapter 7 explores the connection between nonlinear equation solving and optimization. Topics such as residual minimization, Newton-type optimization methods, damping strategies, line-search techniques, and the Armijo condition are discussed from an optimization viewpoint. The chapter also includes a numerical investigation of an adaptive damped Newton method that employs Armijo backtracking.
 
-Finally, Chapter 8 concludes the thesis by summarizing the main findings, discussing limitations, and suggesting directions for future research.
+Chapter 8 concludes the thesis by summarizing the main results obtained. The limitations of the work are discussed and several possible directions for future research are suggested.
